@@ -27,6 +27,9 @@ class LoginController extends Controller
     }
     public function logout()
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
         // Cerrar la sesión y redirigir al inicio.
         session()->forget('usuario_autenticado');
         return redirect()->route('login');
