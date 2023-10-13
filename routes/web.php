@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MainController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +37,14 @@ Route::get('alumnos', function () {
 })->name("alumnos.index");
 */
 
+Route::get('/main', [MainController::class,'index'])->name('main');
+
+Route::get('/', [LoginController::class,'index'])->name('login');
+Route::get('/login', [LoginController::class,'index'])->name('login');
+Route::post('/login', [LoginController::class,'login'])->name('postlogin');
+Route::get('/logout', [LoginController::class,'logout'])->name('logout');
+
+//CRUD ALUMNOS
 Route::get('alumnos', [AlumnoController::class, 'index'])->name("alumnos.index");
 Route::get('alumnos/create', [AlumnoController::class, 'create'])->name("alumnos.create");
 Route::post('alumnos', [AlumnoController::class, 'store'])->name('alumnos.store');
