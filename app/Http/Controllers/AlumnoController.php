@@ -10,20 +10,36 @@ class AlumnoController extends Controller
 {
     public function index()
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+        
         $alumnos = Alumno::all();
         return view('alumnos.index', compact('alumnos'));
     }
     public function show($id)
     {   
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+
         $alumno = Alumno::findOrFail($id);
         return view('alumnos.show', compact('alumno'));
     }
     public function create()
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+
         return view('alumnos.create');
     }
     public function store(Request $request)
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
@@ -54,11 +70,19 @@ class AlumnoController extends Controller
     }
     public function edit($id)
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+
         $alumno = Alumno::findOrFail($id);
         return view('alumnos.edit', compact('alumno'));
     }
     public function update(Request $request, $id)
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
@@ -95,6 +119,10 @@ class AlumnoController extends Controller
     }
     public function destroy($id)
     {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+        
         $alumno = Alumno::findOrFail($id);
         $alumno->delete();
 
