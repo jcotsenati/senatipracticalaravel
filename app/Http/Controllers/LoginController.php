@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Usuario;
 
 class LoginController extends Controller
 {
@@ -18,7 +19,9 @@ class LoginController extends Controller
 
         $email=$request->input("email");
         $contrasena=$request->input("contrasena");
-        if ($email=="jorge@gmail.com" && $contrasena=="jorge") {
+        
+        $usuario = Usuario::where('correo', $email)->where('password', $contrasena)->get();
+        if (count($usuario)==1) {
             session(['usuario_autenticado' => true]);
             return redirect()->route('main');
         }

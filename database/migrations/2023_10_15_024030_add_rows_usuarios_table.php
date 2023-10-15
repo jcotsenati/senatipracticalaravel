@@ -14,6 +14,7 @@ return new class extends Migration
         DB::table('usuarios')->insert([
             'correo' => 'jorge@gmail.com',
             'password' => 'jorge',
+            'usuario' => 'jorge',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -27,6 +28,7 @@ return new class extends Migration
         DB::table('ususarios')
         ->where('correo', 'jorge@gmail.com')
         ->where('password', 'jorge')
+        ->where('usuario', 'jorge')
         ->delete();
     }
 };
