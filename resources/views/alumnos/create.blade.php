@@ -1,3 +1,5 @@
+@extends('layout')    
+@section('content')
 <div class="container">
         <h2>Crear Alumno</h2>
         <form method="POST" action="{{ route('alumnos.store') }}">
@@ -17,3 +19,4 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
     </div>
+@endsection

@@ -1,4 +1,5 @@
-
+@extends('layout')    
+@section('content')
 <div class="container">
     <h2>Listado de Alumnos</h2>
     <table class="table" border="1">
@@ -49,3 +50,4 @@
         <a href="{{ route('alumnos.create') }}" class="btn btn-success">Agregar</a>
     
 </div>
+@endsection

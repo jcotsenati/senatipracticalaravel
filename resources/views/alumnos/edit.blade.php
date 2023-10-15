@@ -1,3 +1,5 @@
+@extends('layout')    
+@section('content')
 <div class="container">
         <h2>Editar Alumno</h2>
         <form method="POST" action="{{ route('alumnos.update', $alumno->id) }}">
@@ -18,3 +20,4 @@
             <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </form>
 </div>
+@endsection
