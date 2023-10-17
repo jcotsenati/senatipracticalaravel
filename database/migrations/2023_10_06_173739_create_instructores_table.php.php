@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('dni',8)->unique();
             $table->string('nombres');
             $table->string('apellidos');
-            $table->string('genero');
+            $table->enum('genero',['MASCULINO','FEMENINO']);
             $table->integer('edad');
             $table->timestamps();
         });

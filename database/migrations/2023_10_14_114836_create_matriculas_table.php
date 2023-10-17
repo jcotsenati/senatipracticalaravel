@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('idCurso'); // Esta columna será nuestra clave foránea
             $table->unsignedBigInteger('idAlumno'); // Esta columna será nuestra clave foránea
             $table->unsignedBigInteger('idInstructor')->nullable();
-            $table->string('anioAcad');
+            $table->enum('anioAcad',['2023-I','2023-II','2024-I','2024-II']);//Solo x simplificaion del DEMO
             $table->timestamps();
 
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('no action')->onUpdate('cascade');
