@@ -15,11 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('idCurso'); // Esta columna será nuestra clave foránea
             $table->unsignedBigInteger('idAlumno'); // Esta columna será nuestra clave foránea
+            $table->unsignedBigInteger('idInstructor')->nullable();
             $table->string('anioAcad');
             $table->timestamps();
 
             $table->foreign('idCurso')->references('id')->on('cursos')->onDelete('no action')->onUpdate('cascade');
             $table->foreign('idAlumno')->references('id')->on('alumnos')->onDelete('no action')->onUpdate('cascade');
+            $table->foreign('idInstructor')->references('id')->on('instructores')->onDelete('no action')->onUpdate('cascade');
 
             $table->unique(['idCurso', 'idAlumno','anioAcad']);
         });
