@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -19,13 +20,15 @@ class LoginController extends Controller
 
         $email=$request->input("email");
         $contrasena=$request->input("contrasena");
-        
-        $usuario = Usuario::where('correo', $email)->where('password', $contrasena)->get();
-        if (count($usuario)==1) {//Solo un usuario
+
+        $usuario = Usuario::where('correo', $email)->first();
+
+        //La contraseña esta encriptada con algoritmo bcrypt() usar: php artisan tinker
+        if ($usuario && Hash::check($contrasena, $usuario->password)) {//Solo un usuario
 
             $usuario_sesion=[
-                "id"=>$usuario[0]->id,
-                "usuario"=>$usuario[0]->usuario //Este usuario lo usaremos para mostrarlo en la cabecera de la web
+                "id"=>$usuario->id,
+                "usuario"=>$usuario->usuario //Este usuario lo usaremos para mostrarlo en la cabecera de la web
             ];
 
             session(['usuario_autenticado' => $usuario_sesion]);
