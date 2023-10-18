@@ -10,7 +10,7 @@ class LoginController extends Controller
     public function index(){
 
         if(session('usuario_autenticado')) {
-            return redirect()->route('main');
+            return redirect()->route('main.index');
         }
         return view("login");
     }
@@ -29,18 +29,18 @@ class LoginController extends Controller
             ];
 
             session(['usuario_autenticado' => $usuario_sesion]);
-            return redirect()->route('main');
+            return redirect()->route('main.index');
         }
         
-        return redirect()->route('login')->with('mensaje', 'Credenciales Inválidas');
+        return redirect()->route('login.index')->with('mensaje', 'Credenciales Inválidas');
     }
     public function logout()
     {
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
         // Cerrar la sesión y redirigir al inicio.
         session()->forget('usuario_autenticado');
-        return redirect()->route('login');
+        return redirect()->route('login.index');
     }
 }

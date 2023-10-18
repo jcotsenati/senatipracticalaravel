@@ -11,7 +11,7 @@ class AlumnoController extends Controller
     public function index()
     {
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
         
         $alumnos = Alumno::all();
@@ -20,7 +20,7 @@ class AlumnoController extends Controller
     public function show($id)
     {   
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
         $alumno = Alumno::findOrFail($id);
@@ -29,7 +29,7 @@ class AlumnoController extends Controller
     public function create()
     {
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
         return view('alumnos.create');
@@ -37,7 +37,7 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
         $request->validate([
@@ -71,7 +71,7 @@ class AlumnoController extends Controller
     public function edit($id)
     {
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
         $alumno = Alumno::findOrFail($id);
@@ -80,7 +80,7 @@ class AlumnoController extends Controller
     public function update(Request $request, $id)
     {
         if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
         $request->validate([

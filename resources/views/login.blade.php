@@ -10,7 +10,7 @@
    
     <h1>Iniciar Sesión</h1>
     
-    <form method="POST" action="{{ route('postlogin') }}">
+    <form method="POST" action="{{ route('login.login') }}">
         @csrf
         <label for="email">Correo Electrónico:</label>
         <input type="text" name="email" id="email">

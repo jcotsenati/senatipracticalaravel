@@ -9,5 +9,5 @@
     <button>INSTRUCTORES</button>
     <button>CURSOS</button>
 
-    <a href="{{ route('logout') }}">Cerrar Sesion</a>
+    <a href="{{ route('login.logout') }}">Cerrar Sesion</a>
 @endsection

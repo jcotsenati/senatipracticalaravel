@@ -37,12 +37,12 @@ Route::get('alumnos', function () {
 })->name("alumnos.index");
 */
 
-Route::get('/main', [MainController::class,'index'])->name('main');
+Route::get('/main', [MainController::class,'index'])->name('main.index');
 
-Route::get('/', [LoginController::class,'index'])->name('login');
-Route::get('/login', [LoginController::class,'index'])->name('login');
-Route::post('/login', [LoginController::class,'login'])->name('postlogin');
-Route::get('/logout', [LoginController::class,'logout'])->name('logout');
+Route::get('/', [LoginController::class,'index'])->name('login.index');
+Route::get('/login', [LoginController::class,'index'])->name('login.index');
+Route::post('/login', [LoginController::class,'login'])->name('login.login');
+Route::get('/login/logout', [LoginController::class,'logout'])->name('login.logout');
 
 //CRUD ALUMNOS
 Route::get('alumnos', [AlumnoController::class, 'index'])->name("alumnos.index");
