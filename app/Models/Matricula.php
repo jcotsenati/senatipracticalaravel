@@ -9,7 +9,7 @@ class Matricula extends Model
 {
     use HasFactory;
     protected $table = 'matriculas'; // Nombre de la tabla en la base de datos
-    protected $fillable = ['id', 'idCurso','idAlumno','anioAcad','created_at'];
+    protected $fillable = ['id', 'idCurso','idAlumno','idInstructor','anioAcad','created_at'];
 
     public function alumno()
     {
