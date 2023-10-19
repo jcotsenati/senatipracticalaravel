@@ -2,7 +2,7 @@
 
 <form action="{{ route('matricula.curso.search') }}" method="post">
     @csrf
-    <input type="text" name="codigo" id="codigo" value="COD01">
+    <input type="text" name="codigo" id="codigo" value="">
     <button type="submit">Buscar Curso</button>
 </form>
 
@@ -27,6 +27,10 @@
 
 @endisset
 
+{{-- Manejo de mensajes de error--}}
 @if(session('mensaje'))
     <p>{{ session('mensaje') }}</p>
+@endif
+@if(isset($mensaje))
+    <p>{{ $mensaje }}</p>
 @endif

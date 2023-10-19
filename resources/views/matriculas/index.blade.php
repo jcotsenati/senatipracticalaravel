@@ -19,7 +19,7 @@
         </select>
     @endif
     
-    <input type="text" name="dni" id="dni" value="40633367">
+    <input type="text" name="dni" id="dni" value="">
     <button type="submit">buscar alumno</button>
 </form>
 
@@ -56,6 +56,10 @@
     
 @endisset
 
+{{-- Manejo de mensajes de error--}}
 @if(session('mensaje'))
     <p>{{ session('mensaje') }}</p>
+@endif
+@if(isset($mensaje))
+    <p>{{ $mensaje }}</p>
 @endif

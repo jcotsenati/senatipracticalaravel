@@ -16,17 +16,20 @@ class MatriculaController extends Controller
         //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         //}
 
-        $idAlumno = $request->input('idAlumno');
+        $dni = $request->input('dni');
         $anioAcad = $request->input('anioAcad');
 
-        if($idAlumno && $anioAcad){
+        if($dni && $anioAcad){
 
-            $alumno = Alumno::where('id',$idAlumno)->first();
+            $alumno = Alumno::where('dni',$dni)->first();
+            if(!$alumno){
+                return view('matriculas.index',['mensaje'=>'Alumno no encontrado !!!']);
+            }
+
             $matriculas = $alumno->matriculas->where('anioAcad', $anioAcad);
             
             session(['matricula_idAlumno' => $alumno->id]);
             session(['matricula_anioAcad' => $anioAcad]);
-
 
             return view('matriculas.index',['alumno'=>$alumno,'matriculas'=>$matriculas,'anioAcad'=>$anioAcad]);
         }
@@ -44,12 +47,8 @@ class MatriculaController extends Controller
         
         $dni=$request->input("dni");
         $anioAcad=$request->input("anioAcad");
-        $alumno = Alumno::where('dni',$dni)->first();
         
-        if($alumno)
-            return redirect()->route('matricula.index',['idAlumno' => $alumno->id,'anioAcad'=>$anioAcad]);
-        else
-            return redirect()->route('matricula.index')->with('mensaje', 'Alumno no encontrado !!!');
+        return redirect()->route('matricula.index',['dni' => $dni,'anioAcad'=>$anioAcad]);
     }
     public function cursoIndex(Request $request)
     {
@@ -57,11 +56,15 @@ class MatriculaController extends Controller
         //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         //}
         
-        $idCurso = $request->input('idCurso');
+        $codigo = $request->input('codigo');
 
-        if($idCurso){
+        if($codigo){
 
-            $curso = Curso::where('id',$idCurso)->first();
+            $curso = Curso::where('codigo',$codigo)->first();
+            if(!$curso){
+                return view('matriculas.cursoIndex',['mensaje' => 'curso no encontrado!!!']);    
+            }
+            
             session(['matricula_idCurso' => $curso->id]);
 
             return view('matriculas.cursoIndex',['curso' => $curso]);
@@ -77,12 +80,9 @@ class MatriculaController extends Controller
         //}
         
         $codigo=$request->input("codigo");
-        $curso = Curso::where('codigo',$codigo)->first();
-        
-        if($curso)
-            return redirect()->route('matricula.curso.index',['idCurso' => $curso->id]);
-        else
-            return redirect()->route('matricula.curso.index')->with('mensaje', 'Curso no encontrado !!!');
+
+        return redirect()->route('matricula.curso.index',['codigo' => $codigo]);
+
     }
     public function cursoMatricular(Request $request)
     {
