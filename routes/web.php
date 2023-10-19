@@ -4,6 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\MatriculaController;
+
+use App\Models\Alumno;
+use App\Models\Curso;
+use App\Models\Instructor;
+use App\Models\Matricula;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +44,12 @@ Route::get('alumnos', function () {
     return app()->make('App\Http\Controllers\AlumnoController')->index();
 })->name("alumnos.index");
 */
+
+Route::get('matricula', [MatriculaController::class,'index'])->name('matricula.index');
+Route::post('matricula/alumno/search', [MatriculaController::class,'search'])->name('matricula.alumno.search');
+Route::get('matricula/curso', [MatriculaController::class,'cursoIndex'])->name('matricula.curso.index');
+Route::post('matricula/curso/search', [MatriculaController::class,'cursoSearch'])->name('matricula.curso.search');
+Route::post('matricula/curso/matricular', [MatriculaController::class,'cursoMatricular'])->name('matricula.curso.matricular');
 
 Route::get('/main', [MainController::class,'index'])->name('main.index');
 
