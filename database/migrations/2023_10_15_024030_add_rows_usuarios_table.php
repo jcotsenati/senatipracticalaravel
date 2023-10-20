@@ -13,7 +13,7 @@ return new class extends Migration
     {
         DB::table('usuarios')->insert([
             'correo' => 'jorge@gmail.com',
-            'password' => 'jorge',
+            'password' => '$2y$10$aW/wt82QoGzkChbT.LtINOmFlJo8I52LX2A4ITzPb6Oh9B3jNUEkq',
             'usuario' => 'jorge',
             'created_at' => now(),
             'updated_at' => now(),
