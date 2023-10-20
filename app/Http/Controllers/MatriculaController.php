@@ -107,7 +107,7 @@ class MatriculaController extends Controller
 
         }catch(QueryException $e){
 
-            return redirect()->route('matricula.index')->with('mensaje', 'Error no se puede crear la matricula !!!');
+            return redirect()->route('matricula.index',['dni' => $dni,'anioAcad' => $anioAcad])->with('mensaje', 'Error no se puede crear la matricula !!!');
 
         }finally {
             session()->forget('matricula_idCurso');
