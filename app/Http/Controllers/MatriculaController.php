@@ -30,6 +30,7 @@ class MatriculaController extends Controller
             
             session(['matricula_idAlumno' => $alumno->id]);
             session(['matricula_anioAcad' => $anioAcad]);
+            session(['matricula_dni' => $dni]);
 
             return view('matriculas.index',['alumno'=>$alumno,'matriculas'=>$matriculas,'anioAcad'=>$anioAcad]);
         }
@@ -93,6 +94,7 @@ class MatriculaController extends Controller
         $idCurso = session('matricula_idCurso');
         $idAlumno = session('matricula_idAlumno');
         $anioAcad = session('matricula_anioAcad');
+        $dni = session('matricula_dni');
 
         $matricula=new Matricula();
         $matricula->idAlumno=$idAlumno;
@@ -111,8 +113,9 @@ class MatriculaController extends Controller
             session()->forget('matricula_idCurso');
             session()->forget('matricula_idAlumno');
             session()->forget('matricula_anioAcad');
+            session()->forget('matricula_dni');
         }
         
-        return redirect()->route('matricula.index',['idAlumno' => $idAlumno,'anioAcad' => $anioAcad]);
+        return redirect()->route('matricula.index',['dni' => $dni,'anioAcad' => $anioAcad]);
     }
 }
