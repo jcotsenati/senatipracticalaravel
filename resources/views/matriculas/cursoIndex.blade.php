@@ -2,7 +2,7 @@
 
 <form action="{{ route('matricula.curso.search') }}" method="post">
     @csrf
-    <input type="text" name="codigo" id="codigo" value="">
+    <input type="text" name="codigo" id="codigo" @if(isset($curso)) value="{{$curso->codigo}}" @endif>
     <button type="submit">Buscar Curso</button>
 </form>
 

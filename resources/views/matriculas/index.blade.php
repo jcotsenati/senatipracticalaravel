@@ -19,7 +19,7 @@
         </select>
     @endif
     
-    <input type="text" name="dni" id="dni" value="">
+    <input type="text" name="dni" id="dni" @if(isset($alumno)) value="{{$alumno->dni}}" @endif>
     <button type="submit">buscar alumno</button>
 </form>
 
