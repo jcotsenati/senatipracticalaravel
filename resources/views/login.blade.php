@@ -16,7 +16,7 @@
         <input type="text" name="email" id="email" value="jorge@gmail.com">
         <br>
         <label for="contrasena">Contraseña:</label>
-        <input type="password" name="contrasena" id="contrasena" value="jorge">
+        <input type="password" name="contrasena" id="contrasena" value="">
         <br>
         <button type="submit">Iniciar Sesión</button>
     </form>

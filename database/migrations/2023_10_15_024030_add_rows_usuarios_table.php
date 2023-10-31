@@ -13,7 +13,7 @@ return new class extends Migration
     {
         DB::table('usuarios')->insert([
             'correo' => 'jorge@gmail.com',
-            'password' => '$2y$10$aW/wt82QoGzkChbT.LtINOmFlJo8I52LX2A4ITzPb6Oh9B3jNUEkq',
+            'password' =>  Hash::make('jorge'),
             'usuario' => 'jorge',
             'created_at' => now(),
             'updated_at' => now(),
@@ -25,10 +25,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::table('ususarios')
+        //El campo correo es unico
+        DB::table('usuarios')
         ->where('correo', 'jorge@gmail.com')
-        ->where('password', 'jorge')
-        ->where('usuario', 'jorge')
         ->delete();
     }
 };
