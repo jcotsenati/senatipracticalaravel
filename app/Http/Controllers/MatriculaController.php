@@ -12,9 +12,9 @@ class MatriculaController extends Controller
 {
     public function index(Request $request)
     {
-        //if(!session('usuario_autenticado')){
-        //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        //}
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
+        }
 
         $dni = $request->input('dni');
         $anioAcad = $request->input('anioAcad');
@@ -42,9 +42,9 @@ class MatriculaController extends Controller
     }
     public function search(Request $request)
     {
-        //if(!session('usuario_autenticado')){
-        //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        //}
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
+        }
         
         $dni=$request->input("dni");
         $anioAcad=$request->input("anioAcad");
@@ -53,9 +53,9 @@ class MatriculaController extends Controller
     }
     public function cursoIndex(Request $request)
     {
-        //if(!session('usuario_autenticado')){
-        //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        //}
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
+        }
         
         $codigo = $request->input('codigo');
 
@@ -76,9 +76,9 @@ class MatriculaController extends Controller
     }
     public function cursoSearch(Request $request)
     {
-        //if(!session('usuario_autenticado')){
-        //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        //}
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
+        }
         
         $codigo=$request->input("codigo");
 
@@ -87,9 +87,9 @@ class MatriculaController extends Controller
     }
     public function cursoMatricular(Request $request)
     {
-        //if(!session('usuario_autenticado')){
-        //    return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        //}
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
+        }
         
         $idCurso = session('matricula_idCurso');
         $idAlumno = session('matricula_idAlumno');
