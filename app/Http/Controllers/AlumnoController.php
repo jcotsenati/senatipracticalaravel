@@ -122,10 +122,26 @@ class AlumnoController extends Controller
         if(!session('usuario_autenticado')){
             return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
         }
-        
-        $alumno = Alumno::findOrFail($id);
-        $alumno->delete();
+        try{
 
-        return redirect()->route('alumnos.index')->with('mensaje', 'Eliminacion satisfactoria !!!');
+            $alumno = Alumno::findOrFail($id);
+            $alumno->delete();
+
+            return redirect()->route('alumnos.index')->with('mensaje', 'Eliminacion satisfactoria !!!');
+        
+        }catch(QueryException $e){
+            $errorCode = $e->getCode();
+
+            if ($errorCode === '23000') {
+
+                return redirect()->route('alumnos.index')->with('mensaje', 'No se puede eliminar, el Registro esta referenciado');
+            }
+            else{
+
+                return redirect()->route('alumnos.index')->with('mensaje', 'No se puede eliminar el Registro !!!');
+            }
+            
+        }
+        
     }
 }
