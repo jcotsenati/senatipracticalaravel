@@ -1,5 +1,29 @@
 @extends('layout')    
 @section('content')
+
+<script type="module">
+    
+    import {bootbox_confirm,bootbox_alert} from '/utils/dialog.js'
+
+    async function confirmaEliminarAlumno(e) {
+        e.preventDefault();
+    
+        let resultado=await bootbox_confirm("¿Estás seguro de que deseas eliminar este elemento?");
+    
+        if(resultado==true){
+
+            e.target.submit();
+        }
+    }
+    function mensajeDeControlador(mensaje){
+
+        bootbox_alert(mensaje);
+    }
+
+    window.confirmaEliminarAlumno = confirmaEliminarAlumno;
+    window.mensajeDeControlador = mensajeDeControlador;
+
+</script>
 <div class="container">
     <h2>Listado de Alumnos</h2>
     <table class="table" border="1">
@@ -20,22 +44,18 @@
                 <td>{{ $alumno->nombres }}</td>
                 <td>{{ $alumno->apellidos }}</td>
                 <td>
-                    <a href="{{ route('alumnos.show', $alumno->id) }}" class="btn btn-primary">Ver</a>
-
                     
-                    <a href="{{ route('alumnos.edit', $alumno->id) }}" class="btn btn-warning">Editar</a>
-
                     <form action="{{ route('alumnos.show', $alumno->id) }}" method="GET" style="display: inline;">
                         @csrf
-                        <button type="submit" class="btn btn-danger">Ver</button>
+                        <button type="submit" class="btn btn-primary">Ver</button>
                     </form>
 
                     <form action="{{ route('alumnos.edit', $alumno->id) }}" method="GET" style="display: inline;">
                         @csrf
-                        <button type="submit" class="btn btn-danger">Editar</button>
+                        <button type="submit" class="btn btn-warning">Editar</button>
                     </form>
 
-                    <form action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
+                    <form onsubmit="confirmaEliminarAlumno(event)" action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -50,4 +70,21 @@
         <a href="{{ route('alumnos.create') }}" class="btn btn-success">Agregar</a>
     
 </div>
+
+    {{-- Manejo de mensajes de error--}}
+    @if(session('mensaje'))
+
+        <script>
+
+            var mensaje="{{ session('mensaje') }}";
+            window.addEventListener('load', (event) => {
+                window.mensajeDeControlador(mensaje);
+            });
+            
+        </script>
+    @endif
+    @if(isset($mensaje))
+        <p>{{ $mensaje }}</p>
+    @endif
+
 @endsection

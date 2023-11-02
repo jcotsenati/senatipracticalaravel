@@ -126,6 +126,6 @@ class AlumnoController extends Controller
         $alumno = Alumno::findOrFail($id);
         $alumno->delete();
 
-        return redirect()->route('alumnos.index');
+        return redirect()->route('alumnos.index')->with('mensaje', 'Eliminacion satisfactoria !!!');
     }
 }
