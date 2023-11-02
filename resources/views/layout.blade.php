@@ -18,6 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js"></script>
     <script src="https://github.com/makeusabrew/bootbox/releases/download/v6.0.0/bootbox.locales.min.js"></script>
     
+    <!-- font awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
 </head>
 <body>

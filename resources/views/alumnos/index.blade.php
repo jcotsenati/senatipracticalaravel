@@ -66,8 +66,9 @@
             @endforeach
         </tbody>
     </table>
-    
-        <a href="{{ route('alumnos.create') }}" class="btn btn-success">Agregar</a>
+
+        <a href="{{ route('main.index') }}" class="btn btn-primary"><i class="bi bi-house-fill" style="margin-right: 10px"></i>Home</a>
+        <a href="{{ route('alumnos.create') }}" class="btn btn-success"><i class="bi bi-file-plus-fill" style="margin-right: 10px"></i>Agregar</a>
     
 </div>
 

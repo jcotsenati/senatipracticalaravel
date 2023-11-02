@@ -17,7 +17,7 @@
                 <label for="apellidos">Apellidos</label>
                 <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $alumno->apellidos }}" required>
             </div>
-            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-        </form>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{{ route('alumnos.index') }}" class="btn btn-danger">Cancelar</a>
 </div>
 @endsection
