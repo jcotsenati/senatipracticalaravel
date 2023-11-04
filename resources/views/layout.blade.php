@@ -23,7 +23,7 @@
 
 </head>
 <body>
-    <header style="border:1px solid red">
+    <header style="border:0px solid red;display:flex;justify-content:flex-end">
         
         @if(session('usuario_autenticado'))
             {{-- Capturamos el usuario de la sesion --}}
@@ -31,10 +31,10 @@
         @endif
 
     </header>
-        <div style="border:1px solid red;margin-top:10px;margin-bottom:10px">
+        <div style="border:0px solid red;margin-top:10px;margin-bottom:10px">
             @yield('content')
         </div>
-    <footer style="border:1px solid red">
+    <footer style="border:0px solid red;display:flex;justify-content:center">
         <p>Todos los derechos reservados para jcm</p>
     </footer>
 </body>
