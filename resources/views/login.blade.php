@@ -20,7 +20,7 @@
         <label for="contrasena">Contraseña:</label>
         <input type="password" name="contrasena" id="contrasena" value="">
         <br>
-        <button type="submit">Iniciar Sesión</button>
+        <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
     </form>
 
     @if(session('mensaje'))

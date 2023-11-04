@@ -1,28 +1,32 @@
 @extends('layout')    
 @section('content')
-    <h1>MATRICULA</h1>
 
+<div class="container">
+    <h1>MATRICULA</h1>
     <form action="{{ route('matricula.alumno.search') }}" method="post">
         @csrf
 
-        @if (isset($anioAcad))
-            <select name="anioAcad" style="width: 150px">
-                <option value="2023-I" @if($anioAcad == '2023-I') selected @endif>2023-I</option>
-                <option value="2023-II" @if($anioAcad == '2023-II') selected @endif>2023-II</option>
-                <option value="2024-I" @if($anioAcad == '2024-I') selected @endif>2024-I</option>
-                <option value="2024-II" @if($anioAcad == '2024-II') selected @endif>2024-II</option>
-            </select>
-        @else
-            <select name="anioAcad" style="width: 150px">
-                <option value="2023-I" >2023-I</option>
-                <option value="2023-II" >2023-II</option>
-                <option value="2024-I" >2024-I</option>
-                <option value="2024-II" >2024-II</option>
-            </select>
-        @endif
-        
-        <input type="text" name="dni" id="dni" @if(isset($alumno)) value="{{$alumno->dni}}" @endif>
-        <button type="submit">buscar alumno</button>
+        <div style="display:flex;height:2.5rem">
+            @if (isset($anioAcad))
+                <select  class="form-select" name="anioAcad" style="width: 150px">
+                    <option value="2023-I" @if($anioAcad == '2023-I') selected @endif>2023-I</option>
+                    <option value="2023-II" @if($anioAcad == '2023-II') selected @endif>2023-II</option>
+                    <option value="2024-I" @if($anioAcad == '2024-I') selected @endif>2024-I</option>
+                    <option value="2024-II" @if($anioAcad == '2024-II') selected @endif>2024-II</option>
+                </select>
+            @else
+                <select  class="form-select" name="anioAcad" style="width: 150px">
+                    <option value="2023-I" >2023-I</option>
+                    <option value="2023-II" >2023-II</option>
+                    <option value="2024-I" >2024-I</option>
+                    <option value="2024-II" >2024-II</option>
+                </select>
+            @endif
+            
+            <input  style="width:250px" class="form-control" type="text" name="dni" id="dni" @if(isset($alumno)) value="{{$alumno->dni}}" @endif>
+            <button style="width:150px" class="btn btn-primary" type="submit">buscar alumno</button>
+            
+        </div>
     </form>
 
     @isset($alumno)
@@ -41,23 +45,26 @@
 
     @isset($alumno)
         
-        <table border="1">
-            @foreach($matriculas as $matricula)
-                <tr>
-                    <td>{{ $matricula->anioAcad }}</td>
-                    <td>{{ $matricula->curso->codigo }}</td>
-                    <td>{{ $matricula->curso->nombre }}</td>
-                </tr>
-            @endforeach
-        </table>
-    
-        <form action="{{ route('matricula.curso.index') }}" method="get">
-            @csrf
-            <button type="submit">agregar curso</button>
-        </form>
+        <div style="display:flex">
+            <table border="1">
+                @foreach($matriculas as $matricula)
+                    <tr>
+                        <td>{{ $matricula->anioAcad }}</td>
+                        <td>{{ $matricula->curso->codigo }}</td>
+                        <td>{{ $matricula->curso->nombre }}</td>
+                    </tr>
+                @endforeach
+            </table>
         
+            <form action="{{ route('matricula.curso.index') }}" method="get">
+                @csrf
+                <button class="btn btn-success" type="submit">agregar curso</button>
+            </form>
+        </div>
     @endisset
-
+    
+    <a href="{{ route('main.index') }}" class="btn btn-primary"><i class="bi bi-house-fill" style="margin-right: 10px"></i>Home</a>
+</div>
     {{-- Manejo de mensajes de error--}}
     @if(session('mensaje'))
         <p>{{ session('mensaje') }}</p>
