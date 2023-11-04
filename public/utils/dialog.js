@@ -2,7 +2,7 @@ export function bootbox_prompt(mensaje){
 
     return new Promise((resolve, reject) => {
 
-        bootbox.prompt(mensaje, function(result){
+        window.bootbox.prompt(mensaje, function(result){
             resolve(result);
         });
           
@@ -12,7 +12,7 @@ export function bootbox_alert(mensaje){
 
     return new Promise((resolve, reject) => {
 
-        bootbox.alert(mensaje, function(){
+        window.bootbox.alert(mensaje, function(){
             resolve("");
         });
           
@@ -22,7 +22,7 @@ export function bootbox_confirm(mensaje){
 
     return new Promise((resolve, reject) => {
 
-        bootbox.confirm({
+        window.bootbox.confirm({
             message: mensaje,
             buttons: {
             confirm: {

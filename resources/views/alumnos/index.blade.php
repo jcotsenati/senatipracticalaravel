@@ -55,7 +55,7 @@
                         <button type="submit" class="btn btn-warning">Editar</button>
                     </form>
 
-                    <form onsubmit="confirmaEliminarAlumno(event)" action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
+                    <form onsubmit="window.confirmaEliminarAlumno(event)" action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
