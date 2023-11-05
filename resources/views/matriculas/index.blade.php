@@ -1,6 +1,18 @@
 @extends('layout')    
 @section('content')
 
+<script type="module">
+    
+    import {bootbox_confirm,bootbox_alert} from '/utils/dialog.js'
+
+    function mensajeDeControlador(mensaje){
+
+        bootbox_alert(mensaje);
+    }
+
+    window.mensajeDeControlador = mensajeDeControlador;
+
+</script>
 <div class="container">
     <h1>MATRICULA</h1>
     <form action="{{ route('matricula.alumno.search') }}" method="post">
@@ -46,7 +58,15 @@
     @isset($alumno)
         
         <div style="display:flex">
-            <table border="1">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Año Academico</th>
+                        <th>Codigo Curso</th>
+                        <th>Nombre Curso</th>
+                    </tr>
+                </thead>
+                <tbody>
                 @foreach($matriculas as $matricula)
                     <tr>
                         <td>{{ $matricula->anioAcad }}</td>
@@ -54,11 +74,12 @@
                         <td>{{ $matricula->curso->nombre }}</td>
                     </tr>
                 @endforeach
+                </tbody>
             </table>
         
             <form action="{{ route('matricula.curso.index') }}" method="get">
                 @csrf
-                <button class="btn btn-success" type="submit">agregar curso</button>
+                <button style="width:150px" class="btn btn-success" type="submit">agregar curso</button>
             </form>
         </div>
     @endisset
@@ -67,9 +88,19 @@
 </div>
     {{-- Manejo de mensajes de error--}}
     @if(session('mensaje'))
-        <p>{{ session('mensaje') }}</p>
+        <script>
+            var mensaje="{{ session('mensaje') }}";
+            window.addEventListener('load', (event) => {
+                window.mensajeDeControlador(mensaje);
+            });
+        </script>
     @endif
     @if(isset($mensaje))
-        <p>{{ $mensaje }}</p>
+        <script>
+            var mensaje="{{ $mensaje }}";
+            window.addEventListener('load', (event) => {
+                window.mensajeDeControlador(mensaje);
+            });
+        </script>
     @endif
 @endsection

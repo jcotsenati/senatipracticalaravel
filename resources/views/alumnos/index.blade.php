@@ -85,7 +85,12 @@
         </script>
     @endif
     @if(isset($mensaje))
-        <p>{{ $mensaje }}</p>
+        <script>
+            var mensaje="{{ $mensaje }}";
+            window.addEventListener('load', (event) => {
+                window.mensajeDeControlador(mensaje);
+            });
+        </script>
     @endif
 
 @endsection
