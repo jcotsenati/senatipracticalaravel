@@ -5,14 +5,17 @@
     
     import {bootbox_confirm,bootbox_alert} from '/utils/dialog.js'
 
-    async function confirmaEliminarAlumno(e) {
+    async function confirmaEliminarAlumno(e,alumno) {
         e.preventDefault();
-    
-        let resultado=await bootbox_confirm("¿Estás seguro de que deseas eliminar este elemento?");
-    
+        let form=e.target;
+        
+        let dni=alumno.dni;
+        let nombres=alumno.nombres+" "+alumno.apellidos;
+        
+        let resultado=await bootbox_confirm("DNI: "+dni+"<br>NOMBRES: "+nombres+"<br>¿Estás seguro de que deseas eliminar este elemento?");
         if(resultado==true){
 
-            e.target.submit();
+            form.submit();
         }
     }
     function mensajeDeControlador(mensaje){
@@ -54,8 +57,7 @@
                         @csrf
                         <button type="submit" class="btn btn-warning">Editar</button>
                     </form>
-
-                    <form onsubmit="window.confirmaEliminarAlumno(event)" action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
+                    <form onsubmit="window.confirmaEliminarAlumno(event, {{ json_encode($alumno) }})" @endphp action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
