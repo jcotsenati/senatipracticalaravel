@@ -1,5 +1,17 @@
 @extends('layout')    
 @section('content')
+<script type="module">
+    
+    import {bootbox_confirm,bootbox_alert} from '/utils/dialog.js'
+
+    function mensajeDeControlador(mensaje){
+
+        bootbox_alert(mensaje);
+    }
+
+    window.mensajeDeControlador = mensajeDeControlador;
+
+</script>
 <div class="container">
         <h2>Editar Alumno</h2>
         <form method="POST" action="{{ route('alumnos.update', $alumno->id) }}">
@@ -20,4 +32,21 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
             <a href="{{ route('alumnos.index') }}" class="btn btn-danger">Cancelar</a>
 </div>
+{{-- Manejo de mensajes de error--}}
+@if(session('mensaje'))
+<script>
+    var mensaje="{{ session('mensaje') }}";
+    window.addEventListener('load', (event) => {
+        window.mensajeDeControlador(mensaje);
+    });
+</script>
+@endif
+@if(isset($mensaje))
+<script>
+    var mensaje="{{ $mensaje }}";
+    window.addEventListener('load', (event) => {
+        window.mensajeDeControlador(mensaje);
+    });
+</script>
+@endif
 @endsection

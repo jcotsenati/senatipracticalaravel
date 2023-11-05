@@ -26,13 +26,19 @@ class AlumnoController extends Controller
         $alumno = Alumno::findOrFail($id);
         return view('alumnos.show', compact('alumno'));
     }
-    public function create()
+    public function create(Request $request)
     {
         if(!session('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
-        return view('alumnos.create');
+        if($request->alumno){
+    
+            $alumno=(object)$request->alumno;
+            return view('alumnos.create',compact('alumno'));
+        }
+        else
+            return view('alumnos.create');
     }
     public function store(Request $request)
     {
@@ -48,24 +54,31 @@ class AlumnoController extends Controller
         try{
             Alumno::create($request->all());
 
-            return redirect()->route('alumnos.index');
+            return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
             $errorCode = $e->getCode();
-           
+            $alumno=[
+                'dni'=>$request->dni,
+                'nombres'=>$request->nombres,
+                'apellidos'=>$request->apellidos
+            ];
+            
+            $mensaje="";
             if ($errorCode === '23000') {
 
-                //return "El registro tiene un campo duplicado <br>".$e->getMessage();
-                return "El registro tiene un campo duplicado";
+                $mensaje='El registro tiene un campo duplicado';
             }
             else if ($errorCode === '22001') {
 
-                //return "El registro tiene un campo duplicado <br>".$e->getMessage();
-                return "El registro tiene un campo mas grande de lo esperado";
+                $mensaje='El registro tiene un campo mas grande de lo esperado';
             }
             else{
-                throw $e;
+
+                $mensaje='No se puede crear el registro';
             }
+
+            return redirect()->route('alumnos.create',compact('alumno'))->with('mensaje', $mensaje);
         }
     }
     public function edit($id)
@@ -97,25 +110,38 @@ class AlumnoController extends Controller
                 'apellidos' => $request->apellidos,
                 'dni' => $request->dni,
             ]);
+
+            return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
+
         }catch(QueryException $e){
-        $errorCode = $e->getCode();
-        
-        if ($errorCode === '23000') {
 
-            //return "El registro tiene un campo duplicado <br>".$e->getMessage();
-            return "El registro tiene un campo duplicado";
-        }
-        else if ($errorCode === '22001') {
+            $errorCode = $e->getCode();
+            
+            $mensaje="";
+            if ($errorCode === '23000') {
 
-            //return "El registro tiene un campo duplicado <br>".$e->getMessage();
-            return "El registro tiene un campo mas grande de lo esperado";
-        }
-        else{
-            throw $e;
-        }
-    }
+                $mensaje='El registro tiene un campo duplicado';
+            }
+            else if ($errorCode === '22001') {
 
-        return redirect()->route('alumnos.index');
+                $mensaje='El registro tiene un campo mas grande de lo esperado';
+            }
+            else{
+
+                $mensaje='No se puede crear el registro';
+            }
+
+            $alumno=[
+                'id'=>$id,
+                'dni'=>$request->dni,
+                'nombres'=>$request->nombres,
+                'apellidos'=>$request->apellidos
+            ];
+            $alumno=(object)$alumno;
+            
+            return view('alumnos.edit', compact('alumno'))->with('mensaje', $mensaje);
+        }
+    
     }
     public function destroy($id)
     {
