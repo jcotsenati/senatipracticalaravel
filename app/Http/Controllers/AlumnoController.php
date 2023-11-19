@@ -14,7 +14,7 @@ class AlumnoController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
         
-        $alumnos = Alumno::all();
+        $alumnos = Alumno::orderBy('id','desc')->paginate(2);
         return view('alumnos.index', compact('alumnos'));
     }
     public function show($id)

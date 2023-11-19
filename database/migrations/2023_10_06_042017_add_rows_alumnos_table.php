@@ -18,6 +18,22 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('alumnos')->insert([
+            'dni'=>'40633368',
+            'nombres' => 'Alan',
+            'apellidos' => 'Garcia',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('alumnos')->insert([
+            'dni'=>'40633369',
+            'nombres' => 'Ricardo',
+            'apellidos' => 'Mendez',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -27,8 +43,12 @@ return new class extends Migration
     {
         DB::table('alumnos')
         ->where('dni', '40633367')
-        ->where('nombres', 'Juan')
-        ->where('apellidos', 'Perez')
+        ->delete();
+        DB::table('alumnos')
+        ->where('dni', '40633368')
+        ->delete();
+        DB::table('alumnos')
+        ->where('dni', '40633369')
         ->delete();
     }
 };
