@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
@@ -66,3 +67,7 @@ Route::get('alumnos/{idAlumno}', [AlumnoController::class, 'show'])->name("alumn
 Route::get('alumnos/{idAlumno}/edit', [AlumnoController::class, 'edit'])->name("alumnos.edit");
 Route::put('alumnos/{idAlumno}', [AlumnoController::class, 'update'])->name('alumnos.update');
 Route::delete('alumnos/{idAlumno}', [AlumnoController::class, 'destroy'])->name('alumnos.destroy');
+
+//CRUD INSTRUCTORES
+Route::get('instructores', [InstructorController::class, 'index'])->name("instructores.index");
+Route::put('instructores/{idInstructor}', [InstructorController::class, 'update'])->name('instructores.update');

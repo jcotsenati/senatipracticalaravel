@@ -27,7 +27,10 @@
         <button class="btn btn-primary">ALUMNOS</button>
     </form>
 
-    <button class="btn btn-primary">INSTRUCTORES</button>
+    <form action="{{ route('instructores.index') }}" method="GET" style="display: inline;">
+        <button class="btn btn-primary">INSTRUCTORES</button>
+    </form>
+
     <button class="btn btn-primary">CURSOS</button>
 
     <form action="{{ route('matricula.index') }}" method="GET" style="display: inline;">
