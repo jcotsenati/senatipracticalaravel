@@ -6,6 +6,6 @@
         <p><strong>Dni:</strong> {{ $alumno->dni }}</p>
         <p><strong>Nombres:</strong> {{ $alumno->nombres }}</p>
         <p><strong>Apellidos:</strong> {{ $alumno->apellidos }}</p>
-        <a href="{{ route('alumnos.index') }}" class="btn btn-primary">Volver</a>
+        <a href="{{ route('alumnos.index',['page' => $page]) }}" class="btn btn-primary">Volver</a>
 </div>
 @endsection

@@ -23,8 +23,9 @@ class AlumnoController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
+        $page = request()->query('page', 1);
         $alumno = Alumno::findOrFail($id);
-        return view('alumnos.show', compact('alumno'));
+        return view('alumnos.show', compact('alumno','page'));
     }
     public function create(Request $request)
     {
@@ -87,8 +88,9 @@ class AlumnoController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
+        $page = request()->query('page', 1);
         $alumno = Alumno::findOrFail($id);
-        return view('alumnos.edit', compact('alumno'));
+        return view('alumnos.edit', compact('alumno','page'));
     }
     public function update(Request $request, $id)
     {
@@ -101,7 +103,8 @@ class AlumnoController extends Controller
             'apellidos' => 'required',
             'dni' => 'required',
         ]);
-    
+        
+        $page = request()->query('page', 1);
         $alumno = Alumno::findOrFail($id);
         
         try{
@@ -111,7 +114,7 @@ class AlumnoController extends Controller
                 'dni' => $request->dni,
             ]);
 
-            return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
+            return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
 

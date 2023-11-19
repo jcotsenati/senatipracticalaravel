@@ -48,15 +48,12 @@
                 <td>{{ $alumno->apellidos }}</td>
                 <td>
                     
-                    <form action="{{ route('alumnos.show', $alumno->id) }}" method="GET" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Ver</button>
-                    </form>
+                    <a href="{{route('alumnos.show', [$alumno->id, 'page' => request()->page])}}" 
+                        class="btn btn-primary">Ver</a>
+                    
+                    <a href="{{route('alumnos.edit', [$alumno->id, 'page' => request()->page])}}" 
+                        class="btn btn-warning">Editar</a>
 
-                    <form action="{{ route('alumnos.edit', $alumno->id) }}" method="GET" style="display: inline;">
-                        @csrf
-                        <button type="submit" class="btn btn-warning">Editar</button>
-                    </form>
                     <form onsubmit='window.confirmaEliminarAlumno(event, @json($alumno))' action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
