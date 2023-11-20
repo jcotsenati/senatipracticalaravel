@@ -27,7 +27,7 @@
         
         @if(session('usuario_autenticado'))
             {{-- Capturamos el usuario de la sesion --}}
-            <p>Bienvenido: {{ session('usuario_autenticado')['usuario'] }}</p>
+            <p style="margin-right: 20px">Bienvenido: {{ session('usuario_autenticado')['usuario'] }}</p>
         @endif
 
     </header>

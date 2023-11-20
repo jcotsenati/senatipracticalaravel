@@ -36,6 +36,7 @@
                 <th>Dni</th>
                 <th>Nombres</th>
                 <th>Apellidos</th>
+                <th>Edad</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -46,6 +47,7 @@
                 <td>{{ $instructor->dni }}</td>
                 <td>{{ $instructor->nombres }}</td>
                 <td>{{ $instructor->apellidos }}</td>
+                <td>{{ $instructor->edad }}</td>
                 <td>
                     @php
                         $data_target_id="alumnoModalVer".$instructor->id;
@@ -68,6 +70,7 @@
                                 <p>Dni: {{ $instructor->dni }}</p>
                                 <p>Nombres: {{ $instructor->nombres }}</p>
                                 <p>Apellidos: {{ $instructor->apellidos }}</p>
+                                <p>Edad: {{ $instructor->edad }}</p>
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -109,7 +112,12 @@
                                         <label for="apellidos" class="form-label">Apellidos</label>
                                         <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $instructor->apellidos }}">
                                     </div>
-                                
+                                    
+                                    <div class="mb-3">
+                                        <label for="edad" class="form-label">Edad</label>
+                                        <input type="number" class="form-control" id="edad" name="edad" step="1" min="0" value="{{ $instructor->edad }}">
+                                    </div>
+
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Guardar</button>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -129,7 +137,7 @@
     
 
         <a href="{{ route('main.index') }}" class="btn btn-primary"><i class="bi bi-house-fill" style="margin-right: 10px"></i>Home</a>
-        <a href="{{ route('alumnos.create') }}" class="btn btn-success"><i class="bi bi-file-plus-fill" style="margin-right: 10px"></i>Agregar</a>
+        <a href="{{ route('instructores.index') }}" class="btn btn-success"><i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i>Refrescar</a>
     
 </div>
 

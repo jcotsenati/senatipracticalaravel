@@ -37,6 +37,7 @@ class InstructorController extends Controller
                 'nombres' => $request->nombres,
                 'apellidos' => $request->apellidos,
                 'dni' => $request->dni,
+                'edad' => $request->edad,
             ]);
 
             return redirect()->route('instructores.index')->with('mensaje', 'Operacion Satisfactoria !!!');
