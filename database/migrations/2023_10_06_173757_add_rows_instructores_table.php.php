@@ -20,6 +20,24 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('instructores')->insert([
+            'dni'=>'40633361',
+            'nombres' => 'JUAN',
+            'apellidos' => 'MENDEZ',
+            'genero' => 'MASCULINO',
+            'edad' => 31,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('instructores')->insert([
+            'dni'=>'40633362',
+            'nombres' => 'CARLOS',
+            'apellidos' => 'RODRIGUEZ',
+            'genero' => 'MASCULINO',
+            'edad' => 32,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -29,10 +47,12 @@ return new class extends Migration
     {
         DB::table('instructores')
         ->where('dni', '40633367')
-        ->where('nombres', 'Alan')
-        ->where('apellidos', 'Garcia')
-        ->where('genero', 'MASCULINO')
-        ->where('edad', 30)
+        ->delete();
+        DB::table('instructores')
+        ->where('dni', '40633361')
+        ->delete();
+        DB::table('instructores')
+        ->where('dni', '40633362')
         ->delete();
     }
 };
