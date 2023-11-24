@@ -25,6 +25,27 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('cursos')->insert([
+            'nombre' => 'Lenguaje',
+            'codigo' => 'COD03',
+            'ciclo' => 'II',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('cursos')->insert([
+            'nombre' => 'Base de Datos',
+            'codigo' => 'COD04',
+            'ciclo' => 'II',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        DB::table('cursos')->insert([
+            'nombre' => 'Analisis',
+            'codigo' => 'COD05',
+            'ciclo' => 'III',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
@@ -37,6 +58,15 @@ return new class extends Migration
         ->delete();
         DB::table('cursos')
         ->where('codigo', 'COD02')
+        ->delete();
+        DB::table('cursos')
+        ->where('codigo', 'COD03')
+        ->delete();
+        DB::table('cursos')
+        ->where('codigo', 'COD04')
+        ->delete();
+        DB::table('cursos')
+        ->where('codigo', 'COD05')
         ->delete();
     }
 };
