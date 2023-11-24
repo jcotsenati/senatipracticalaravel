@@ -6,6 +6,7 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\MatriculaController;
+use App\Http\Controllers\CursoController;
 
 use App\Models\Alumno;
 use App\Models\Curso;
@@ -71,3 +72,7 @@ Route::delete('alumnos/{idAlumno}', [AlumnoController::class, 'destroy'])->name(
 //CRUD INSTRUCTORES
 Route::get('instructores', [InstructorController::class, 'index'])->name("instructores.index");
 Route::put('instructores/{idInstructor}', [InstructorController::class, 'update'])->name('instructores.update');
+
+//CRUD CURSOS
+Route::get('cursos', [CursoController::class, 'index'])->name("cursos.index");
+Route::post('cursos', [CursoController::class, 'store'])->name('cursos.store');

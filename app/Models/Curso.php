@@ -9,7 +9,7 @@ class Curso extends Model
 {
     use HasFactory;
     protected $table = 'cursos'; // Nombre de la tabla en la base de datos
-    protected $fillable = ['id','nombres', 'codigo','ciclo'];
+    protected $fillable = ['id','nombre', 'codigo','ciclo'];
 
     public function matriculas()
     {

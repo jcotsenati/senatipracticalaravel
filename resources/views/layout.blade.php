@@ -21,6 +21,8 @@
     <!-- font awesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
 </head>
 <body>
     <header style="border:0px solid red;display:flex;justify-content:flex-end">

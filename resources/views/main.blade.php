@@ -31,7 +31,9 @@
         <button class="btn btn-primary">INSTRUCTORES</button>
     </form>
 
-    <button class="btn btn-primary">CURSOS</button>
+    <form action="{{ route('cursos.index') }}" method="GET" style="display: inline;">
+        <button class="btn btn-primary">CURSOS</button>
+    </form>
 
     <form action="{{ route('matricula.index') }}" method="GET" style="display: inline;">
         @csrf
