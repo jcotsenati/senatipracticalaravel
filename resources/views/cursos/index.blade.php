@@ -106,15 +106,15 @@
                     <form id="formularioCursoCrear" action="">
                         
                         <div class="mb-3">
-                            <label for="dni" class="form-label">Nombres</label>
+                            <label for="nombre" class="form-label">Nombres</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" value="">
                         </div>
                         <div class="mb-3">
-                            <label for="nombres" class="form-label">Código</label>
+                            <label for="codigo" class="form-label">Código</label>
                             <input type="text" class="form-control" id="codigo" name="codigo" value="">
                         </div>
                         <div class="mb-3">
-                            <label for="apellidos" class="form-label">Ciclo</label>
+                            <label for="ciclo" class="form-label">Ciclo</label>
                             <input type="text" class="form-control" id="ciclo" name="ciclo" value="">
                         </div>
                         
@@ -132,6 +132,10 @@
 </div>
 
 <script>
+
+    $('#CursoModalCrear').on('hidden.bs.modal', function (e) {
+        $("#buttonRefrescar")[0].click();
+    })
 
     async function CrearCurso(event) {
         event.preventDefault(); // Previene el envío normal del formulario
@@ -161,17 +165,16 @@
             formulario['codigo'].value="";
             formulario['ciclo'].value="";
             let result=await response.json();
-            window.mensajeDeControlador(result.message);
-            //$("#buttonRefrescar")[0].click();
+            Swal.fire(result.message,'','success');
         }
         else if(response.status==422){
             let text=await response.text();
             text=JSON.parse(text);
-            window.mensajeDeControlador(text.message);
+            Swal.fire(text.message,'','error');
         }   
         else{
             let text=await response.text();
-            window.mensajeDeControlador(text);
+            Swal.fire(text,'','error');
         }
     }
 
