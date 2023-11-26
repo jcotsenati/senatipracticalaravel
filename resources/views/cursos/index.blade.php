@@ -86,6 +86,9 @@
         </tbody>
     </table>
     
+    <div>
+        {{ $cursos->links() }}
+    </div>
 
         <a href="{{ route('main.index') }}" class="btn btn-primary"><i class="bi bi-house-fill" style="margin-right: 10px"></i>Home</a>
         <a id="buttonRefrescar" href="{{ route('cursos.index') }}" class="btn btn-success"><i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i>Refrescar</a>

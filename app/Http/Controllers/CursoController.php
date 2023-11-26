@@ -15,7 +15,7 @@ class CursoController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
         
-        $cursos = Curso::all();
+        $cursos = Curso::orderBy('id','desc')->paginate(3);
         return view('cursos.index', compact('cursos'));
     }
     public function store(Request $request)
