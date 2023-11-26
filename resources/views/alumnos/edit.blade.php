@@ -19,15 +19,24 @@
             @method('PUT') <!-- Utiliza PUT para la actualización -->
             <div class="form-group">
                 <label for="nombres">Dni</label>
-                <input type="text" class="form-control" id="dni" name="dni" value="{{ $alumno->dni }}" required>
+                <input type="text" class="form-control" id="dni" name="dni" value="{{ old('dni',$alumno->dni) }}">
+                @error('dni')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="nombres">Nombres</label>
-                <input type="text" class="form-control" id="nombres" name="nombres" value="{{ $alumno->nombres }}" required>
+                <input type="text" class="form-control" id="nombres" name="nombres" value="{{ old('nombres',$alumno->nombres) }}">
+                @error('nombres')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="apellidos">Apellidos</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $alumno->apellidos }}" required>
+                <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ old('apellidos',$alumno->apellidos) }}" >
+                @error('apellidos')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
             <a href="{{ route('alumnos.index',['page' => $page]) }}" class="btn btn-danger">Cancelar</a>

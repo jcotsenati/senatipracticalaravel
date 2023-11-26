@@ -50,7 +50,7 @@ class AlumnoController extends Controller
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
-            'dni' => 'required|size:8|unique:alumnos,dni',
+            'dni' => 'required|digits:8|unique:alumnos,dni',
         ]);
         try{
             Alumno::create($request->all());
@@ -101,7 +101,7 @@ class AlumnoController extends Controller
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
-            'dni' => 'required',
+            'dni' => 'required|digits:8|unique:alumnos,dni,'.$id
         ]);
         
         $page = request()->query('page', 1);
