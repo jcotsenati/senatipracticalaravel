@@ -106,7 +106,7 @@
                     <form id="formularioCursoCrear" action="">
                         
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombres</label>
+                            <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" value="">
                         </div>
                         <div class="mb-3">

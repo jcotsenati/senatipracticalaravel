@@ -21,6 +21,12 @@ class CursoController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'nombre' => 'required',
+            'codigo' => 'required',
+            'ciclo' => 'required',
+        ]);
+
         try{
 
             Curso::create($request->all());
