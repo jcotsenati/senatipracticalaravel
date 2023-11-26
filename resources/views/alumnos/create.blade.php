@@ -40,7 +40,6 @@
             <button type="submit" class="btn btn-primary">Guardar</button>
             <a href="{{ route('alumnos.index') }}" class="btn btn-danger">Cancelar</a>
         </form>
-        </form>
     </div>
     {{-- Manejo de mensajes de error--}}
     @if(session('mensaje'))
