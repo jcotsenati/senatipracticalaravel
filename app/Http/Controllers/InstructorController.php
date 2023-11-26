@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
 use Illuminate\Database\QueryException;
@@ -13,7 +14,7 @@ class InstructorController extends Controller
         if(!session('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
-        
+
         $instructores = Instructor::all();
         return view('instructores.index', compact('instructores'));
     }
@@ -23,13 +24,19 @@ class InstructorController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
-        $request->validate([
+        $validator=Validator::make($request->all(), [
             'nombres' => 'required',
             'apellidos' => 'required',
-            'dni' => 'required',
+            'dni' => 'required|digits:8|unique:instructores,dni,'.$id
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('instructores.index')
+                        ->with('idInstructorEditarFlash',$id)
+                        ->withErrors($validator,'frmInstructorModalEditar')
+                        ->withInput();
+        }
         
-    
         $instructor = Instructor::findOrFail($id);
         
         try{

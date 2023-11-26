@@ -27,6 +27,25 @@
     window.mensajeDeControlador = mensajeDeControlador;
 
 </script>
+
+@if ($errors->frmInstructorModalEditar->any())    
+    <script>
+
+        var idInstructor="{{ session('idInstructorEditarFlash') }}";  
+        window.addEventListener('load', (event) => {
+            const myModal = new bootstrap.Modal('#instructorModalEditar'+idInstructor)
+            myModal.show();
+            
+            $('#instructorModalEditar'+idInstructor).on('hidden.bs.modal', function (e) {
+                $("#buttonRefrescar")[0].click();
+            })
+
+        });
+
+    </script>
+@endif
+
+
 <div class="container">
     <h2>Listado de Instructores</h2>
     <table class="table" border="1">
@@ -80,7 +99,7 @@
                     </div>
                     
                     @php
-                        $data_target_id="alumnoModalEditar".$instructor->id;
+                        $data_target_id="instructorModalEditar".$instructor->id;
                         $data_target="#".$data_target_id;
                     @endphp
 
@@ -102,20 +121,40 @@
                                     @method('PUT')
                                     <div class="mb-3">
                                         <label for="dni" class="form-label">DNI</label>
-                                        <input type="text" class="form-control" id="dni" name="dni" value="{{ $instructor->dni }}">
+                                        <input type="text" class="form-control" id="dni" name="dni" value="{{ old('dni',$instructor->dni) }}">
+                                        @if ($errors->getBag('frmInstructorModalEditar')->has('dni'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->getBag('frmInstructorModalEditar')->first('dni') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="mb-3">
                                         <label for="nombres" class="form-label">Nombres</label>
-                                        <input type="text" class="form-control" id="nombres" name="nombres" value="{{ $instructor->nombres }}">
+                                        <input type="text" class="form-control" id="nombres" name="nombres" value="{{ old('nombres',$instructor->nombres) }}">
+                                        @if ($errors->{'frmInstructorModalEditar'}->has('nombres'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->{'frmInstructorModalEditar'}->first('nombres') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="mb-3">
                                         <label for="apellidos" class="form-label">Apellidos</label>
-                                        <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ $instructor->apellidos }}">
+                                        <input type="text" class="form-control" id="apellidos" name="apellidos" value="{{ old('apellidos',$instructor->apellidos) }}">
+                                        @if ($errors->{'frmInstructorModalEditar'}->has('apellidos'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->{'frmInstructorModalEditar'}->first('apellidos') }}
+                                            </div>
+                                        @endif
                                     </div>
                                     
                                     <div class="mb-3">
                                         <label for="edad" class="form-label">Edad</label>
-                                        <input type="number" class="form-control" id="edad" name="edad" step="1" min="0" value="{{ $instructor->edad }}">
+                                        <input type="number" class="form-control" id="edad" name="edad" step="1" min="0" value="{{ old('edad',$instructor->edad) }}">
+                                        @if ($errors->{'frmInstructorModalEditar'}->has('edad'))
+                                            <div class="alert alert-danger">
+                                                {{ $errors->{'frmInstructorModalEditar'}->first('edad') }}
+                                            </div>
+                                        @endif
                                     </div>
 
                                     <div class="modal-footer">
@@ -137,7 +176,7 @@
     
 
         <a href="{{ route('main.index') }}" class="btn btn-primary"><i class="bi bi-house-fill" style="margin-right: 10px"></i>Home</a>
-        <a href="{{ route('instructores.index') }}" class="btn btn-success"><i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i>Refrescar</a>
+        <a id="buttonRefrescar" href="{{ route('instructores.index') }}" class="btn btn-success"><i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i>Refrescar</a>
     
 </div>
 
