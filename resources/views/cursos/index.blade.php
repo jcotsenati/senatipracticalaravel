@@ -118,7 +118,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="ciclo" class="form-label">Ciclo</label>
-                            <input type="text" class="form-control" id="ciclo" name="ciclo" value="">
+                            <select name="ciclo" id="ciclo" class="form-control">
+                                    <option value="I">I</option>
+                                    <option value="II">II</option>
+                                    <option value="III">III</option>
+                                    <option value="IV">IV</option>
+                                    <option value="V">V</option>
+                                    <option value="VI">VI</option>
+                            </select>
                         </div>
                         
                         <div class="modal-footer">
