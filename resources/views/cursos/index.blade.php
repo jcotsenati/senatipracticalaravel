@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-warning" data-bs-toggle="modal">
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" style="display: none">
                         Editar
                     </button>
                     
@@ -111,10 +111,12 @@
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" value="">
+                            <div id="nombre-error" style="display:none" class="alert alert-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label for="codigo" class="form-label">Código</label>
                             <input type="text" class="form-control" id="codigo" name="codigo" value="">
+                            <div id="codigo-error" style="display:none" class="alert alert-danger"></div>
                         </div>
                         <div class="mb-3">
                             <label for="ciclo" class="form-label">Ciclo</label>
@@ -173,13 +175,31 @@
         if(response.status==200){
             formulario['nombre'].value="";
             formulario['codigo'].value="";
-            formulario['ciclo'].value="";
+            formulario['ciclo'].value="I";
+            
+            $("#formularioCursoCrear .alert").each(function() {
+                $(this).css("display","none");
+            });
+            
             let result=await response.json();
             Swal.fire(result.message,'','success');
         }
         else if(response.status==422){
             let text=await response.text();
             text=JSON.parse(text);
+            console.log(text);
+
+            $("#formularioCursoCrear .alert").each(function() {
+                $(this).css("display","none");
+            });
+
+            for (let clave in text.errors) {
+                
+                $("#"+clave+"-error").css("display","");
+                $("#"+clave+"-error").html(text.errors[clave][0]);
+                
+            }
+
             Swal.fire(text.message,'','error');
         }   
         else{
