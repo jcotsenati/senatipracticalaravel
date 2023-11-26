@@ -46,11 +46,11 @@ class AlumnoController extends Controller
         if(!session('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
-
+        
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
-            'dni' => 'required',
+            'dni' => 'required|size:8|unique:alumnos,dni',
         ]);
         try{
             Alumno::create($request->all());
