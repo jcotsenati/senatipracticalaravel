@@ -116,7 +116,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="{{ route('instructores.update', [$instructor->id]) }}">
+                                <form method="post" action="{{ route('instructores.update', [$instructor->id,'page' => request()->page]) }}">
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">
@@ -173,10 +173,16 @@
             @endforeach
         </tbody>
     </table>
-    
+    <div>
+        {{ $instructores->links() }}
+    </div>
 
         <a href="{{ route('main.index') }}" class="btn btn-primary"><i class="bi bi-house-fill" style="margin-right: 10px"></i>Home</a>
-        <a id="buttonRefrescar" href="{{ route('instructores.index') }}" class="btn btn-success"><i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i>Refrescar</a>
+        @php
+            $page=request('page');
+            $url = $page == null ? route('instructores.index') : route('instructores.index', ['page' => $page]);
+        @endphp
+        <a id="buttonRefrescar" href="{{$url}}" class="btn btn-success"><i class="bi bi-arrow-clockwise" style="margin-right: 10px"></i>Refrescar</a>
     
 </div>
 

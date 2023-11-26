@@ -15,7 +15,7 @@ class InstructorController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
-        $instructores = Instructor::all();
+        $instructores = Instructor::orderBy('id','desc')->paginate(2);
         return view('instructores.index', compact('instructores'));
     }
     public function update(Request $request, $id)
@@ -24,6 +24,8 @@ class InstructorController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
+        $page = request()->query('page', 1);
+
         $validator=Validator::make($request->all(), [
             'nombres' => 'required',
             'apellidos' => 'required',
@@ -31,7 +33,7 @@ class InstructorController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('instructores.index')
+            return redirect()->route('instructores.index',['page'=>$page])
                         ->with('idInstructorEditarFlash',$id)
                         ->withErrors($validator,'frmInstructorModalEditar')
                         ->withInput();
@@ -47,7 +49,7 @@ class InstructorController extends Controller
                 'edad' => $request->edad,
             ]);
 
-            return redirect()->route('instructores.index')->with('mensaje', 'Operacion Satisfactoria !!!');
+            return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
 
@@ -75,7 +77,7 @@ class InstructorController extends Controller
             ];
             $instructor=(object)$instructor;
             
-            return redirect()->route('instructores.index')->with('mensaje', $mensaje);
+            return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', $mensaje);
             
         }
     
