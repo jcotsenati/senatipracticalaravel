@@ -29,7 +29,8 @@ class InstructorController extends Controller
         $validator=Validator::make($request->all(), [
             'nombres' => 'required',
             'apellidos' => 'required',
-            'dni' => 'required|digits:8|unique:instructores,dni,'.$id
+            'dni' => 'required|digits:8|unique:instructores,dni,'.$id,
+            'edad' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -68,18 +69,56 @@ class InstructorController extends Controller
 
                 $mensaje='No se puede crear el registro';
             }
-
-            $instructor=[
-                'id'=>$id,
-                'dni'=>$request->dni,
-                'nombres'=>$request->nombres,
-                'apellidos'=>$request->apellidos
-            ];
-            $instructor=(object)$instructor;
             
             return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', $mensaje);
             
         }
     
+    }
+    public function store(Request $request)
+    {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
+        }
+        
+        $page = request()->query('page', 1);
+
+        $validator=Validator::make($request->all(), [
+            'nombres' => 'required',
+            'apellidos' => 'required',
+            'dni' => 'required|digits:8|unique:instructores,dni',
+            'edad' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('instructores.index',['page'=>$page])
+                        ->withErrors($validator,'frmInstructorModalCrear')
+                        ->withInput();
+        }
+    
+        try{
+            Instructor::create($request->all());
+
+            return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', 'Operacion Satisfactoria !!!');
+
+        }catch(QueryException $e){
+            $errorCode = $e->getCode();
+            
+            $mensaje="";
+            if ($errorCode === '23000') {
+
+                $mensaje='El registro tiene un campo duplicado';
+            }
+            else if ($errorCode === '22001') {
+
+                $mensaje='El registro tiene un campo mas grande de lo esperado';
+            }
+            else{
+
+                $mensaje='No se puede crear el registro';
+            }
+
+            return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', $mensaje);
+        }
     }
 }

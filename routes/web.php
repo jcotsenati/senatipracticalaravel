@@ -72,6 +72,7 @@ Route::delete('alumnos/{idAlumno}', [AlumnoController::class, 'destroy'])->name(
 //CRUD INSTRUCTORES
 Route::get('instructores', [InstructorController::class, 'index'])->name("instructores.index");
 Route::put('instructores/{idInstructor}', [InstructorController::class, 'update'])->name('instructores.update');
+Route::post('instructores', [InstructorController::class, 'store'])->name('instructores.store');
 
 //CRUD CURSOS
 Route::get('cursos', [CursoController::class, 'index'])->name("cursos.index");
