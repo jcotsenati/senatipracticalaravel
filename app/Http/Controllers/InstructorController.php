@@ -121,4 +121,34 @@ class InstructorController extends Controller
             return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', $mensaje);
         }
     }
+    public function destroy($id)
+    {
+        if(!session('usuario_autenticado')){
+            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
+        }
+
+        $page = request()->query('page', 1);
+
+        try{
+
+            $alumno = Instructor::findOrFail($id);
+            $alumno->delete();
+
+            return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', 'Eliminacion satisfactoria !!!');
+        
+        }catch(QueryException $e){
+            $errorCode = $e->getCode();
+
+            if ($errorCode === '23000') {
+
+                return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', 'No se puede eliminar, el Registro esta referenciado');
+            }
+            else{
+
+                return redirect()->route('instructores.index',['page'=>$page])->with('mensaje', 'No se puede eliminar el Registro !!!');
+            }
+            
+        }
+        
+    }
 }

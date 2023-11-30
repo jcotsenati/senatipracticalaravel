@@ -5,12 +5,12 @@
     
     import {bootbox_confirm,bootbox_alert} from '/utils/dialog.js'
 
-    async function confirmaEliminarAlumno(e,alumno) {
+    async function confirmaEliminarInstructor(e,instructor) {
         e.preventDefault();
         let form=e.target;
         
-        let dni=alumno.dni;
-        let nombres=alumno.nombres+" "+alumno.apellidos;
+        let dni=instructor.dni;
+        let nombres=instructor.nombres+" "+instructor.apellidos;
         
         let resultado=await bootbox_confirm("DNI: "+dni+"<br>NOMBRES: "+nombres+"<br>¿Estás seguro de que deseas eliminar este elemento?");
         if(resultado==true){
@@ -23,7 +23,7 @@
         bootbox_alert(mensaje);
     }
 
-    window.confirmaEliminarAlumno = confirmaEliminarAlumno;
+    window.confirmaEliminarInstructor = confirmaEliminarInstructor;
     window.mensajeDeControlador = mensajeDeControlador;
 
 </script>
@@ -180,10 +180,17 @@
 
                                 </form>
                             
+                            </div>
                         </div>
                         </div>
                     </div>
 
+                <form onsubmit='window.confirmaEliminarInstructor(event, @json($instructor))' action="{{ route('instructores.destroy', [$instructor->id,'page' => request()->page]) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+                
                 </td>
             </tr>
             @endforeach
@@ -260,6 +267,7 @@
 
                     </form>
                 
+                </div>
             </div>
             </div>
         </div>
