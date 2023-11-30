@@ -52,7 +52,7 @@
             const myModal = new bootstrap.Modal('#instructorModalCrear');
             myModal.show();
             
-            $('#instructorModalCrear'+idInstructor).on('hidden.bs.modal', function (e) {
+            $('#instructorModalCrear').on('hidden.bs.modal', function (e) {
                 $("#buttonRefrescar")[0].click();
             })
 
