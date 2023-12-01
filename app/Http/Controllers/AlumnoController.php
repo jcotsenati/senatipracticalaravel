@@ -33,13 +33,7 @@ class AlumnoController extends Controller
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
-        if($request->alumno){
-    
-            $alumno=(object)$request->alumno;
-            return view('alumnos.create',compact('alumno'));
-        }
-        else
-            return view('alumnos.create');
+        return view('alumnos.create');
     }
     public function store(Request $request)
     {
@@ -59,12 +53,7 @@ class AlumnoController extends Controller
 
         }catch(QueryException $e){
             $errorCode = $e->getCode();
-            $alumno=[
-                'dni'=>$request->dni,
-                'nombres'=>$request->nombres,
-                'apellidos'=>$request->apellidos
-            ];
-            
+        
             $mensaje="";
             if ($errorCode === '23000') {
 
@@ -79,7 +68,7 @@ class AlumnoController extends Controller
                 $mensaje='No se puede crear el registro';
             }
 
-            return redirect()->route('alumnos.create',compact('alumno'))->with('mensaje', $mensaje);
+            return redirect()->route('alumnos.create')->with('mensaje', $mensaje);
         }
     }
     public function edit($id)
@@ -97,13 +86,13 @@ class AlumnoController extends Controller
         if(!session('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
-
+        
         $request->validate([
             'nombres' => 'required',
             'apellidos' => 'required',
             'dni' => 'required|digits:8|unique:alumnos,dni,'.$id
         ]);
-        
+
         $page = request()->query('page', 1);
         $alumno = Alumno::findOrFail($id);
         
@@ -133,16 +122,8 @@ class AlumnoController extends Controller
 
                 $mensaje='No se puede crear el registro';
             }
-
-            $alumno=[
-                'id'=>$id,
-                'dni'=>$request->dni,
-                'nombres'=>$request->nombres,
-                'apellidos'=>$request->apellidos
-            ];
-            $alumno=(object)$alumno;
             
-            return view('alumnos.edit', compact('alumno'))->with('mensaje', $mensaje);
+            return redirect()->route('alumnos.edit', [$id,'page'=>$page])->with('mensaje', $mensaje);
         }
     
     }
