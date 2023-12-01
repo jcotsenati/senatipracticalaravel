@@ -14,7 +14,6 @@ class AlumnoController extends Controller
         if(!session('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
-        
         $alumnos = Alumno::orderBy('id','desc')->paginate(2);
         return view('alumnos.index', compact('alumnos'));
     }
@@ -50,7 +49,6 @@ class AlumnoController extends Controller
 
         try{
             Alumno::create($request->all());
-
             return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
