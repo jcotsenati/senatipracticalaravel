@@ -54,7 +54,7 @@
                     <a href="{{route('alumnos.edit', [$alumno->id, 'page' => request()->page])}}" 
                         class="btn btn-warning">Editar</a>
 
-                    <form onsubmit='window.confirmaEliminarAlumno(event, @json($alumno))' action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" style="display: inline;">
+                    <form onsubmit='window.confirmaEliminarAlumno(event, @json($alumno))' action="{{ route('alumnos.destroy', [$alumno->id,'page' => request()->page]) }}" method="POST" style="display: inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Eliminar</button>
