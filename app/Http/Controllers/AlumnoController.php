@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Alumno;
 use Illuminate\Database\QueryException;
+use App\Utils\LogHelper;
 
 class AlumnoController extends Controller
-{
+{    
     public function index()
     {
         if(!session('usuario_autenticado')){
@@ -46,27 +47,18 @@ class AlumnoController extends Controller
             'apellidos' => 'required',
             'dni' => 'required|digits:8|unique:alumnos,dni',
         ]);
+
         try{
             Alumno::create($request->all());
 
             return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
-            $errorCode = $e->getCode();
-        
-            $mensaje="";
-            if ($errorCode === '23000') {
 
-                $mensaje='El registro tiene un campo duplicado';
-            }
-            else if ($errorCode === '22001') {
+            LogHelper::logError($this,$e);
 
-                $mensaje='El registro tiene un campo mas grande de lo esperado';
-            }
-            else{
-
-                $mensaje='No se puede crear el registro';
-            }
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            $mensaje=$fechaHoraActual.' No se puede crear el registro';
 
             return redirect()->route('alumnos.create')->with('mensaje', $mensaje);
         }
@@ -107,21 +99,10 @@ class AlumnoController extends Controller
 
         }catch(QueryException $e){
 
-            $errorCode = $e->getCode();
-            
-            $mensaje="";
-            if ($errorCode === '23000') {
+            LogHelper::logError($this,$e);
 
-                $mensaje='El registro tiene un campo duplicado';
-            }
-            else if ($errorCode === '22001') {
-
-                $mensaje='El registro tiene un campo mas grande de lo esperado';
-            }
-            else{
-
-                $mensaje='No se puede crear el registro';
-            }
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            $mensaje=$fechaHoraActual.' No se puede actualizar el registro';
             
             return redirect()->route('alumnos.edit', [$id,'page'=>$page])->with('mensaje', $mensaje);
         }
@@ -143,17 +124,23 @@ class AlumnoController extends Controller
             return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje', 'Eliminacion satisfactoria !!!');
         
         }catch(QueryException $e){
+
+            LogHelper::logError($this,$e);
+
             $errorCode = $e->getCode();
 
             if ($errorCode === '23000') {
-
-                return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje', 'No se puede eliminar, el Registro esta referenciado');
+                $fechaHoraActual = date("Y-m-d H:i:s");
+                $mensaje=$fechaHoraActual.' No se puede eliminar, el Registro esta referenciado';
+                
             }
             else{
-
-                return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje', 'No se puede eliminar el Registro !!!');
+                $fechaHoraActual = date("Y-m-d H:i:s");
+                $mensaje=$fechaHoraActual.' No se puede eliminar el Registro !!!';
+            
             }
             
+            return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje',$mensaje);
         }
         
     }
