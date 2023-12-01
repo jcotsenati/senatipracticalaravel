@@ -35,21 +35,10 @@ class CursoController extends Controller
 
         }catch(QueryException $e){
 
-            $errorCode = $e->getCode();
-            
-            $mensaje="";
-            if ($errorCode === '23000') {
+            LogHelper::logError($this,$e);
 
-                $mensaje='El registro tiene un campo duplicado';
-            }
-            else if ($errorCode === '22001') {
-
-                $mensaje='El registro tiene un campo mas grande de lo esperado';
-            }
-            else{
-
-                $mensaje='No se puede crear el registro';
-            }
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            $mensaje=$fechaHoraActual.' No se puede crear el registro';
 
             return response()->json(['message' => $mensaje],422);
         }
