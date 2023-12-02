@@ -49,4 +49,46 @@ class AlumnoUnitTest extends TestCase
         $this->assertEquals($alumno->apellidos, $alumnoMock->apellidos);
         
     }
+    public function test_show_param_query(): void
+    {
+        
+        $alumnoMock = Alumno::factory()->create();
+        $pageMock=100;
+
+        Session::shouldReceive('has')
+                    ->once()
+                    ->with('usuario_autenticado')
+                    ->andReturn(true);
+        $controller = new AlumnoController();
+        
+        $request = Request::create('/alumnos/'.$alumnoMock->id.'?page='.$pageMock, 'GET');
+        $response = $controller->show($request,$alumnoMock->id);
+        $page=$response->getData()["page"];
+        $this->assertEquals($page, $pageMock);
+
+        $alumnoMock = Alumno::factory()->create();
+        $pageMock=NULL;
+
+        Session::shouldReceive('has')
+        ->once()
+        ->with('usuario_autenticado')
+        ->andReturn(true);
+
+        $request = Request::create('/alumnos/'.$alumnoMock->id.'?page='.$pageMock, 'GET');
+        $response = $controller->show($request,$alumnoMock->id);
+        $page=$response->getData()["page"];
+        $this->assertEquals($page, "");
+        
+        $alumnoMock = Alumno::factory()->create();
+        Session::shouldReceive('has')
+        ->once()
+        ->with('usuario_autenticado')
+        ->andReturn(true);
+        
+        $request = Request::create('/alumnos/'.$alumnoMock->id, 'GET');
+        $response = $controller->show($request,$alumnoMock->id);
+        $page=$response->getData()["page"];
+        $this->assertEquals($page, "1");
+        
+    }
 }
