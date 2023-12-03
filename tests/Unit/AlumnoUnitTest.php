@@ -66,7 +66,6 @@ class AlumnoUnitTest extends TestCase
         $page=$response->getData()["page"];
         $this->assertEquals($page, $pageMock);
 
-        $alumnoMock = Alumno::factory()->create();
         $pageMock=NULL;
 
         Session::shouldReceive('has')
@@ -79,7 +78,16 @@ class AlumnoUnitTest extends TestCase
         $page=$response->getData()["page"];
         $this->assertEquals($page, "");
         
-        $alumnoMock = Alumno::factory()->create();
+        Session::shouldReceive('has')
+        ->once()
+        ->with('usuario_autenticado')
+        ->andReturn(true);
+
+        $request = Request::create('/alumnos/'.$alumnoMock->id.'?page=', 'GET');
+        $response = $controller->show($request,$alumnoMock->id);
+        $page=$response->getData()["page"];
+        $this->assertEquals($page, "");
+
         Session::shouldReceive('has')
         ->once()
         ->with('usuario_autenticado')
