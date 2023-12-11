@@ -24,11 +24,6 @@ class AlumnoUnitTest extends TestCase
         $alumnoMock = Alumno::factory()->create();
         $pageMock=100;
 
-        Session::shouldReceive('has')
-                    ->once()
-                    ->with('usuario_autenticado')
-                    ->andReturn(true);
-
         $request = Request::create('/alumnos/'.$alumnoMock->id.'?page='.$pageMock, 'GET');
         $controller = new AlumnoController();
         $response = $controller->show($request,$alumnoMock->id);
@@ -55,10 +50,7 @@ class AlumnoUnitTest extends TestCase
         $alumnoMock = Alumno::factory()->create();
         $pageMock=100;
 
-        Session::shouldReceive('has')
-                    ->once()
-                    ->with('usuario_autenticado')
-                    ->andReturn(true);
+        
         $controller = new AlumnoController();
         
         $request = Request::create('/alumnos/'.$alumnoMock->id.'?page='.$pageMock, 'GET');
@@ -68,30 +60,19 @@ class AlumnoUnitTest extends TestCase
 
         $pageMock=NULL;
 
-        Session::shouldReceive('has')
-        ->once()
-        ->with('usuario_autenticado')
-        ->andReturn(true);
-
+        
         $request = Request::create('/alumnos/'.$alumnoMock->id.'?page='.$pageMock, 'GET');
         $response = $controller->show($request,$alumnoMock->id);
         $page=$response->getData()["page"];
         $this->assertEquals($page, "");
         
-        Session::shouldReceive('has')
-        ->once()
-        ->with('usuario_autenticado')
-        ->andReturn(true);
-
+        
         $request = Request::create('/alumnos/'.$alumnoMock->id.'?page=', 'GET');
         $response = $controller->show($request,$alumnoMock->id);
         $page=$response->getData()["page"];
         $this->assertEquals($page, "");
 
-        Session::shouldReceive('has')
-        ->once()
-        ->with('usuario_autenticado')
-        ->andReturn(true);
+        
         
         $request = Request::create('/alumnos/'.$alumnoMock->id, 'GET');
         $response = $controller->show($request,$alumnoMock->id);

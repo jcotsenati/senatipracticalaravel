@@ -12,35 +12,23 @@ class AlumnoController extends Controller
 {    
     public function index()
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
         $alumnos = Alumno::orderBy('id','desc')->paginate(2);
         return view('alumnos.index', compact('alumnos'));
     }
     public function show(Request $request,$id)
     {   
-        if(!Session::has('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
-
+    
         $page = $request->query('page', 1);
         $alumno = Alumno::findOrFail($id);
         return view('alumnos.show', compact('alumno','page'));
     }
     public function create(Request $request)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
-
+        
         return view('alumnos.create');
     }
     public function store(Request $request)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
         
         $request->validate([
             'nombres' => 'required',
@@ -64,19 +52,13 @@ class AlumnoController extends Controller
     }
     public function edit($id)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
-
+        
         $page = request()->query('page', 1);
         $alumno = Alumno::findOrFail($id);
         return view('alumnos.edit', compact('alumno','page'));
     }
     public function update(Request $request, $id)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
         
         $request->validate([
             'nombres' => 'required',
@@ -109,10 +91,7 @@ class AlumnoController extends Controller
     }
     public function destroy($id)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
-        }
-
+    
         $page = request()->query('page', 1);
 
         try{

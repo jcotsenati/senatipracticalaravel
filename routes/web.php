@@ -61,19 +61,21 @@ Route::post('/login', [LoginController::class,'login'])->name('login.login');
 Route::get('/login/logout', [LoginController::class,'logout'])->name('login.logout');
 
 //CRUD ALUMNOS
-Route::get('alumnos', [AlumnoController::class, 'index'])->name("alumnos.index");
-Route::get('alumnos/create', [AlumnoController::class, 'create'])->name("alumnos.create");
-Route::post('alumnos', [AlumnoController::class, 'store'])->name('alumnos.store');
-Route::get('alumnos/{idAlumno}', [AlumnoController::class, 'show'])->name("alumnos.show");
-Route::get('alumnos/{idAlumno}/edit', [AlumnoController::class, 'edit'])->name("alumnos.edit");
-Route::put('alumnos/{idAlumno}', [AlumnoController::class, 'update'])->name('alumnos.update');
-Route::delete('alumnos/{idAlumno}', [AlumnoController::class, 'destroy'])->name('alumnos.destroy');
+Route::get('alumnos', [AlumnoController::class, 'index'])->name("alumnos.index")->middleware("autenticacion");
+Route::get('alumnos/create', [AlumnoController::class, 'create'])->name("alumnos.create")->middleware("autenticacion");
+Route::post('alumnos', [AlumnoController::class, 'store'])->name('alumnos.store')->middleware("autenticacion");
+Route::get('alumnos/{idAlumno}', [AlumnoController::class, 'show'])->name("alumnos.show")->middleware("autenticacion");
+Route::get('alumnos/{idAlumno}/edit', [AlumnoController::class, 'edit'])->name("alumnos.edit")->middleware("autenticacion");
+Route::put('alumnos/{idAlumno}', [AlumnoController::class, 'update'])->name('alumnos.update')->middleware("autenticacion");
+Route::delete('alumnos/{idAlumno}', [AlumnoController::class, 'destroy'])->name('alumnos.destroy')->middleware("autenticacion");
 
 //CRUD INSTRUCTORES
-Route::get('instructores', [InstructorController::class, 'index'])->name("instructores.index");
-Route::put('instructores/{idInstructor}', [InstructorController::class, 'update'])->name('instructores.update');
-Route::post('instructores', [InstructorController::class, 'store'])->name('instructores.store');
-Route::delete('instructores/{idInstructor}', [InstructorController::class, 'destroy'])->name('instructores.destroy');
+Route::middleware(['autenticacion'])->group(function () {
+    Route::get('instructores', [InstructorController::class, 'index'])->name("instructores.index");
+    Route::put('instructores/{idInstructor}', [InstructorController::class, 'update'])->name('instructores.update');
+    Route::post('instructores', [InstructorController::class, 'store'])->name('instructores.store');
+    Route::delete('instructores/{idInstructor}', [InstructorController::class, 'destroy'])->name('instructores.destroy');
+});
 
 //CRUD CURSOS
 Route::get('cursos', [CursoController::class, 'index'])->name("cursos.index");

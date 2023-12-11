@@ -11,18 +11,12 @@ class InstructorController extends Controller
 {
     public function index()
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
-
         $instructores = Instructor::orderBy('id','desc')->paginate(2);
         return view('instructores.index', compact('instructores'));
     }
     public function update(Request $request, $id)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
+        
 
         $page = request()->query('page', 1);
 
@@ -66,9 +60,6 @@ class InstructorController extends Controller
     }
     public function store(Request $request)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
-        }
         
         $page = request()->query('page', 1);
 
@@ -102,10 +93,7 @@ class InstructorController extends Controller
     }
     public function destroy($id)
     {
-        if(!session('usuario_autenticado')){
-            return redirect()->route('login')->with('mensaje', 'Acceso No Autorizado');
-        }
-
+        
         $page = request()->query('page', 1);
 
         try{
