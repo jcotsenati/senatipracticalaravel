@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Alumno;
 use Illuminate\Database\QueryException;
 use App\Utils\LogHelper;
+use Illuminate\Support\Facades\Session;
 
 class AlumnoController extends Controller
 {    
@@ -14,17 +15,16 @@ class AlumnoController extends Controller
         if(!session('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
-        
         $alumnos = Alumno::orderBy('id','desc')->paginate(2);
         return view('alumnos.index', compact('alumnos'));
     }
-    public function show($id)
+    public function show(Request $request,$id)
     {   
-        if(!session('usuario_autenticado')){
+        if(!Session::has('usuario_autenticado')){
             return redirect()->route('login.index')->with('mensaje', 'Acceso No Autorizado');
         }
 
-        $page = request()->query('page', 1);
+        $page = $request->query('page', 1);
         $alumno = Alumno::findOrFail($id);
         return view('alumnos.show', compact('alumno','page'));
     }
@@ -50,7 +50,6 @@ class AlumnoController extends Controller
 
         try{
             Alumno::create($request->all());
-
             return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
