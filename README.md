@@ -1,5 +1,6 @@
 Practica CRUD Laravel Senati
 **INSTALACION**
-1) composer install --no-dev
-2) php artisan migrate
-3) php artisan serve
+1) cp .env.example .env
+2) composer install --no-dev
+3) php artisan migrate
+4) php artisan serve
