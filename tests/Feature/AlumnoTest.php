@@ -54,6 +54,7 @@ class AlumnoTest extends TestCase
         $response = $this->post(route('alumnos.store'), $alumnoData);
         $response->assertStatus(302);
         $response->assertRedirect(route('alumnos.index'));
+        $response->assertSessionHas('mensaje', 'Operacion Satisfactoria !!!');
         
         $this->assertDatabaseHas('alumnos', [
             'nombres' => 'Juan',
@@ -61,6 +62,65 @@ class AlumnoTest extends TestCase
             'dni'=>'67564332'
         ]);
         
+    }
+    public function test_create_exception(): void
+    {
+        $usuario_sesion=[
+            "id"=>1,
+            "usuario"=>'jorge'
+        ];
+        session(['usuario_autenticado' => $usuario_sesion]);
+
+        $nombre="Juan";
+        for($i=0;$i<255;$i++){
+            $nombre.=" Juan";
+        }
+
+        $alumnoData = [
+            'nombres' => $nombre,
+            'apellidos' => 'Perez',
+            'dni'=>'67564332'
+        ];
+        $response = $this->post(route('alumnos.store'), $alumnoData);
+        $response->assertStatus(302);
+        $response->assertRedirect(route('alumnos.create'));
+        //
+        $response->assertSessionHas('mensaje');
+    }
+    public function test_create_validation(): void
+    {
+        $usuario_sesion=[
+            "id"=>1,
+            "usuario"=>'jorge'
+        ];
+        session(['usuario_autenticado' => $usuario_sesion]);
+
+        $alumnoData = [
+            'nombres' => '',
+            'apellidos' => '',
+        ];
+        $response = $this->post(route('alumnos.store'), $alumnoData);
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'nombres',
+            'apellidos',
+        ]);
+
+        ////
+        $dni_errors=array('','56767','786786671','40633367');
+        foreach($dni_errors as $dni){
+
+            $alumnoData = [
+                'dni' => $dni,
+            ];
+            $response = $this->post(route('alumnos.store'), $alumnoData);
+            $response->assertStatus(302);
+            $response->assertSessionHasErrors([
+                'dni',
+            ]);
+
+        }
+
     }
     public function test_update(): void
     {
