@@ -11,7 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class AlumnoTest extends TestCase
 {
     use RefreshDatabase;
-    public function test_index_autorizado(): void
+    public function test_alumno_index_autorizado(): void
     {
         $usuario_sesion=[
             "id"=>1,
@@ -30,7 +30,7 @@ class AlumnoTest extends TestCase
 
         $response->assertStatus(200);
     }
-    public function test_index_noautorizado(): void
+    public function test_alumno_index_no_autorizado(): void
     {
         $response = $this->get(route('alumnos.index'));
         $response->assertRedirect(route('login.index'));
@@ -38,7 +38,7 @@ class AlumnoTest extends TestCase
         $response->assertStatus(302);
         
     }
-    public function test_create(): void
+    public function test_alumno_create(): void
     {
         $usuario_sesion=[
             "id"=>1,
@@ -63,7 +63,7 @@ class AlumnoTest extends TestCase
         ]);
         
     }
-    public function test_create_exception(): void
+    public function test_alumno_create_exception(): void
     {
         $usuario_sesion=[
             "id"=>1,
@@ -87,7 +87,7 @@ class AlumnoTest extends TestCase
         //
         $response->assertSessionHas('mensaje');
     }
-    public function test_create_validation(): void
+    public function test_alumno_create_validation(): void
     {
         $usuario_sesion=[
             "id"=>1,
@@ -122,7 +122,7 @@ class AlumnoTest extends TestCase
         }
 
     }
-    public function test_update(): void
+    public function test_alumno_update(): void
     {
         $usuario_sesion=[
             "id"=>1,
