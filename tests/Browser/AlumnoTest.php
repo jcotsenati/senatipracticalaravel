@@ -22,8 +22,8 @@ class AlumnoTest extends DuskTestCase
 
         $browser->visit('/login/logout');
     }
-
-    public function testAlumnoCreate()
+    
+    public function test_alumno_create()
     {   
         $this->browse(function (Browser $browser) {
 
@@ -43,7 +43,7 @@ class AlumnoTest extends DuskTestCase
         });
     
     }
-    public function testAlumnoCreateException()
+    public function test_alumno_create_exception()
     {
         $this->browse(function (Browser $browser) {
 
@@ -66,7 +66,7 @@ class AlumnoTest extends DuskTestCase
             $this->logOut($browser);
         });
     }
-    public function testAlumnoCreateValidation()
+    public function test_alumno_create_validation()
     {
         $this->browse(function (Browser $browser) {
 
