@@ -22,7 +22,20 @@ class AlumnoTest extends DuskTestCase
 
         $browser->visit('/login/logout');
     }
-    
+    public function test_alumno_index()
+    {
+        $this->browse(function (Browser $browser) {
+            $this->logIn($browser);
+
+            $browser->visit('/alumnos')
+            ->assertSee('Listado de Alumnos')
+            ->assertVisible('.table')
+            ->assertPresent('.pagination')
+            ->assertPathIs('/alumnos');
+
+            $this->logOut($browser);
+        });
+    } 
     public function test_alumno_create()
     {   
         $this->browse(function (Browser $browser) {
