@@ -3,7 +3,6 @@
 namespace Tests;
 
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\ProcessBuilder;
 
 trait RunsWebServer
 {
@@ -43,17 +42,18 @@ trait RunsWebServer
 	 */
 	protected static function buildServerProcess()
 	{
-		$host = env('TEST_SERVER_HOST', '127.0.0.1');
-		$port = env('TEST_SERVER_PORT', 8000);
+		//$host = env('TEST_SERVER_HOST', '127.0.0.1');
+		//$port = env('TEST_SERVER_PORT', 8000);
 		
-		return (new ProcessBuilder())
-			->setTimeout(null)
-			->setWorkingDirectory(realpath(__DIR__.'/../'))
-			->add('exec')
-			->add(PHP_BINARY)
-			->add('-S')
-			->add("$host:$port")
-			->add('server.php')
-			->getProcess();
+		$command = [
+			PHP_BINARY,
+			'artisan',
+			"serve",
+		];
+
+		$process = new Process($command);
+		$process->setTimeout(null)->setWorkingDirectory(realpath(__DIR__.'/../'));
+		return $process;
+
 	}
 }

@@ -5,11 +5,23 @@ namespace Tests\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
-
+use Tests\RunsWebServer;
 class AlumnoTest extends DuskTestCase
 {   
     use DatabaseMigrations;
+    use RunsWebServer;
 
+    public function setUp(): void 
+    {
+        parent::setUp();
+        self::startWebServer();
+    }
+
+    public function tearDown():void
+    {
+        self::stopWebServer();
+        parent::tearDown();
+    }
     private function logIn(Browser $browser){
 
         $browser->visit('/')
