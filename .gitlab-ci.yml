@@ -1,0 +1,22 @@
+stages:
+  - pruebas
+  - despliegue
+
+test-job:
+  stage: pruebas
+  script:
+    - cd ~/public_html
+    - git pull origin master
+    - php artisan test
+    - php artisan dusk
+  tags:
+    - senatitest
+
+deploy-job:
+  stage: despliegue
+  script:
+    - cd ~/public_html
+    - git pull origin master
+    - sh ~/permisos.sh
+  tags:
+    - senatitest
