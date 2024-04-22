@@ -7,6 +7,7 @@ test-job:
   script:
     - cd ~/public_html
     - git pull origin master
+    - php artisan migrate:fresh
     - php artisan test
     - php artisan dusk
   tags:
