@@ -54,7 +54,7 @@ class AlumnoTest extends TestCase
         $response = $this->post(route('alumnos.store'), $alumnoData);
         $response->assertStatus(302);
         $response->assertRedirect(route('alumnos.index'));
-        $response->assertSessionHas('mensaje', 'Operacion Satisfactoria !!!');
+        $response->assertSessionHas('msn_sucess', 'Operacion Satisfactoria !!!');
         
         $this->assertDatabaseHas('alumnos', [
             'nombres' => 'Juan',
@@ -85,7 +85,7 @@ class AlumnoTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('alumnos.create'));
         //
-        $response->assertSessionHas('mensaje');
+        $response->assertSessionHas('msn_error');
     }
     public function test_alumno_create_validation(): void
     {
@@ -140,7 +140,8 @@ class AlumnoTest extends TestCase
 
         $response = $this->put(route('alumnos.update',$alumnoMock->id), $alumnoData);
         $response->assertStatus(302);
-        $response->assertRedirect(route('alumnos.index',["page"=>"1"]));
+        $response->assertRedirect(route('alumnos.index',["page"=>1]));//OJO siempre page=1
+        $response->assertSessionHas('msn_sucess', 'Operacion Satisfactoria !!!');
 
         $this->assertDatabaseHas('alumnos', [
             'id'=>$alumnoMock->id,
@@ -148,5 +149,39 @@ class AlumnoTest extends TestCase
             'apellidos' => 'Perez',
             'dni'=>'67564332'
         ]);
+    }
+    public function test_alumno_update_exception(): void
+    {
+        $usuario_sesion=[
+            "id"=>1,
+            "usuario"=>'jorge'
+        ];
+        session(['usuario_autenticado' => $usuario_sesion]);
+
+        $alumnoMock = Alumno::factory()->create();
+        
+        $nombre="Juan";
+        for($i=0;$i<255;$i++){
+            $nombre.=" Juan";
+        }
+
+        $alumnoData = [
+            'nombres' => $nombre,
+            'apellidos' => 'Perez',
+            'dni'=>'67564332'
+        ];
+
+        $response = $this->put(route('alumnos.update',$alumnoMock->id), $alumnoData);
+        $response->assertStatus(302);
+        $response->assertRedirect(route('alumnos.edit',[$alumnoMock->id,'page' => 1]));//OJO siempre page=1
+        $response->assertSessionHas('msn_error');
+
+        $this->assertDatabaseMissing('alumnos', [
+            'id'=>$alumnoMock->id,
+            'nombres' => $nombre,
+            'apellidos' => 'Perez',
+            'dni'=>'67564332'
+        ]);
+        
     }
 }
