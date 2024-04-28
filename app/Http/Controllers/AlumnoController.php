@@ -38,7 +38,7 @@ class AlumnoController extends Controller
 
         try{
             Alumno::create($request->all());
-            return redirect()->route('alumnos.index')->with('mensaje', 'Operacion Satisfactoria !!!');
+            return redirect()->route('alumnos.index')->with('msn_sucess', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
 
@@ -47,7 +47,7 @@ class AlumnoController extends Controller
             $fechaHoraActual = date("Y-m-d H:i:s");
             $mensaje=$fechaHoraActual.' No se puede crear el registro';
 
-            return redirect()->route('alumnos.create')->with('mensaje', $mensaje);
+            return redirect()->route('alumnos.create')->with('msn_error', $mensaje);
         }
     }
     public function edit($id)
@@ -76,7 +76,7 @@ class AlumnoController extends Controller
                 'dni' => $request->dni,
             ]);
 
-            return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje', 'Operacion Satisfactoria !!!');
+            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_sucess', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
 
@@ -85,7 +85,7 @@ class AlumnoController extends Controller
             $fechaHoraActual = date("Y-m-d H:i:s");
             $mensaje=$fechaHoraActual.' No se puede actualizar el registro';
             
-            return redirect()->route('alumnos.edit', [$id,'page'=>$page])->with('mensaje', $mensaje);
+            return redirect()->route('alumnos.edit', [$id,'page'=>$page])->with('msn_error', $mensaje);
         }
     
     }
@@ -99,7 +99,7 @@ class AlumnoController extends Controller
             $alumno = Alumno::findOrFail($id);
             $alumno->delete();
 
-            return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje', 'Eliminacion satisfactoria !!!');
+            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_sucess', 'Eliminacion satisfactoria !!!');
         
         }catch(QueryException $e){
 
@@ -118,7 +118,7 @@ class AlumnoController extends Controller
             
             }
             
-            return redirect()->route('alumnos.index',['page'=>$page])->with('mensaje',$mensaje);
+            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_error',$mensaje);
         }
         
     }

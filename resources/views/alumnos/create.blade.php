@@ -42,9 +42,9 @@
         </form>
     </div>
     {{-- Manejo de mensajes de error--}}
-    @if(session('mensaje'))
+    @if(session('msn_error'))
         <script>
-            var mensaje="{{ session('mensaje') }}";
+            var mensaje="{{ session('msn_error') }}";
             window.addEventListener('load', (event) => {
                 window.mensajeDeControlador(mensaje);
             });
