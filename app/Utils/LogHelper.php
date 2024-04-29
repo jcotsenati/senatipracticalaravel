@@ -10,7 +10,9 @@ class LogHelper {
         $className = $reflector->getShortName();
         $trace = debug_backtrace();
         $methodName = $trace[1]['function'];
+        $lineaError=$trace[0]['line'];
+        $archivoError=$trace[0]['file'];
 
-        Log::error("{$className}@{$methodName}: " . $e->getMessage());
+        Log::error("{$className}@{$methodName} {$archivoError}({$lineaError}) ". $e->getMessage());
     }
 }
