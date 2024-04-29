@@ -38,7 +38,7 @@ class AlumnoController extends Controller
 
         try{
             Alumno::create($request->all());
-            return redirect()->route('alumnos.index')->with('msn_sucess', 'Operacion Satisfactoria !!!');
+            return redirect()->route('alumnos.index')->with('msn_success', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
 
@@ -65,18 +65,19 @@ class AlumnoController extends Controller
             'apellidos' => 'required',
             'dni' => 'required|digits:8|unique:alumnos,dni,'.$id
         ]);
-
+    
         $page = request()->query('page', 1);
-        $alumno = Alumno::findOrFail($id);
         
         try{
+
+            $alumno = Alumno::findOrFail($id);
             $alumno->update([
                 'nombres' => $request->nombres,
                 'apellidos' => $request->apellidos,
                 'dni' => $request->dni,
             ]);
 
-            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_sucess', 'Operacion Satisfactoria !!!');
+            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_success', 'Operacion Satisfactoria !!!');
 
         }catch(QueryException $e){
 
@@ -85,6 +86,15 @@ class AlumnoController extends Controller
             $fechaHoraActual = date("Y-m-d H:i:s");
             $mensaje=$fechaHoraActual.' No se puede actualizar el registro';
             
+            return redirect()->route('alumnos.edit', [$id,'page'=>$page])->with('msn_error', $mensaje);
+        }
+        catch(\Exception $e){
+
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            $mensaje=$fechaHoraActual.' No se puede eliminar el registro !!!';
+
             return redirect()->route('alumnos.edit', [$id,'page'=>$page])->with('msn_error', $mensaje);
         }
     
@@ -99,7 +109,7 @@ class AlumnoController extends Controller
             $alumno = Alumno::findOrFail($id);
             $alumno->delete();
 
-            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_sucess', 'Eliminacion satisfactoria !!!');
+            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_success', 'Eliminacion satisfactoria !!!');
         
         }catch(QueryException $e){
 
@@ -118,6 +128,15 @@ class AlumnoController extends Controller
             
             }
             
+            return redirect()->route('alumnos.index',['page'=>$page])->with('msn_error',$mensaje);
+
+        }catch(\Exception $e){
+
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            $mensaje=$fechaHoraActual.' No se puede eliminar el registro !!!';
+
             return redirect()->route('alumnos.index',['page'=>$page])->with('msn_error',$mensaje);
         }
         

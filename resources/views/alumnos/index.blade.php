@@ -78,11 +78,11 @@
 
 
     {{-- Manejo de mensajes de error--}}
-    @if(session('msn_sucess'))
+    @if(session('msn_success'))
 
         <script>
 
-            var mensaje="{{ session('msn_sucess') }}";
+            var mensaje="{{ session('msn_success') }}";
             window.addEventListener('load', (event) => {
                 window.mensajeDeControlador(mensaje);
             });
